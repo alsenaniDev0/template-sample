@@ -1,0 +1,2106 @@
+{
+    "id": "safhat-template-framework",
+    "name": "Safhat Template Framework",
+    "version": "1.0.0",
+    "schemaVersion": "1.0.0",
+    "description": "Generic starter framework for building Safhat templates. It includes common sections, reusable field types, validation examples, conditional visibility, lists, repeaters, media, colors, typography, and interactive feature blocks.",
+    "type": "framework",
+    "category": "starter",
+    "language": "ar",
+    "direction": "rtl",
+    "html": "index.html",
+    "css": "style.css",
+    "thumbnail": "thumbnail.png",
+    "previewImage": "preview.png",
+    "tags": [
+        "framework",
+        "starter",
+        "template",
+        "sections",
+        "validation"
+    ],
+    "status": "active",
+    "isPremium": false,
+    "exportSettings": {
+        "width": 1080,
+        "height": 1920,
+        "durationSeconds": 8,
+        "fps": 30,
+        "safeArea": {
+            "top": 80,
+            "right": 60,
+            "bottom": 80,
+            "left": 60
+        }
+    },
+    "features": {
+        "feelings": {
+            "enabled": true,
+            "approvalMode": "manual",
+            "preventDuplicate": true,
+            "rateLimitMinutes": 5,
+            "maxNameLength": 60,
+            "maxMessageLength": 220,
+            "title": "Interactive Messages",
+            "description": "Generic message submission block. Can be used for feelings, guestbook, feedback, testimonials, wishes, or comments."
+        },
+        "rsvp": {
+            "enabled": true,
+            "preventDuplicate": true,
+            "maxNameLength": 60,
+            "title": "Visitor Response",
+            "description": "Generic response block. Can be used for RSVP, voting, booking interest, confirmation, or selection.",
+            "statuses": [
+                {
+                    "label": "Option 1",
+                    "value": "option_1",
+                    "icon": "✅"
+                },
+                {
+                    "label": "Option 2",
+                    "value": "option_2",
+                    "icon": "❌"
+                },
+                {
+                    "label": "Option 3",
+                    "value": "option_3",
+                    "icon": "❓"
+                }
+            ]
+        }
+    },
+    "fields": [
+        {
+            "key": "language",
+            "label": "اللغة",
+            "type": "select",
+            "formTab": "settings",
+            "group": "page",
+            "order": 1,
+            "width": "half",
+            "required": true,
+            "defaultValue": "ar",
+            "options": [
+                {
+                    "label": "العربية",
+                    "value": "ar"
+                },
+                {
+                    "label": "English",
+                    "value": "en"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر لغة القالب"
+            }
+        },
+        {
+            "key": "direction",
+            "label": "اتجاه الصفحة",
+            "type": "select",
+            "formTab": "settings",
+            "group": "page",
+            "order": 2,
+            "width": "half",
+            "required": true,
+            "defaultValue": "rtl",
+            "options": [
+                {
+                    "label": "RTL",
+                    "value": "rtl"
+                },
+                {
+                    "label": "LTR",
+                    "value": "ltr"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر اتجاه الصفحة"
+            }
+        },
+        {
+            "key": "layoutStyle",
+            "label": "نمط التخطيط",
+            "type": "select",
+            "formTab": "design",
+            "group": "layout",
+            "order": 3,
+            "width": "half",
+            "required": true,
+            "defaultValue": "default",
+            "options": [
+                {
+                    "label": "افتراضي",
+                    "value": "default"
+                },
+                {
+                    "label": "وسطي",
+                    "value": "centered"
+                },
+                {
+                    "label": "مضغوط",
+                    "value": "compact"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر نمط التخطيط"
+            }
+        },
+        {
+            "key": "pageTitle",
+            "label": "عنوان الصفحة",
+            "type": "text",
+            "formTab": "content",
+            "group": "page",
+            "order": 4,
+            "width": "full",
+            "required": true,
+            "defaultValue": "Safhat Template Framework",
+            "placeholder": "مثال: صفحة تعريفية احترافية",
+            "hint": "يستخدم داخل وسم title في المتصفح",
+            "minLength": 3,
+            "maxLength": 80,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "عنوان الصفحة مطلوب",
+                "minLength": "عنوان الصفحة قصير جدًا",
+                "maxLength": "عنوان الصفحة يجب ألا يتجاوز 80 حرف"
+            }
+        },
+        {
+            "key": "brandIcon",
+            "label": "أيقونة الهوية",
+            "type": "icon",
+            "formTab": "content",
+            "group": "header",
+            "order": 5,
+            "width": "half",
+            "required": true,
+            "defaultValue": "◇",
+            "options": [
+                {
+                    "label": "◇",
+                    "value": "◇"
+                },
+                {
+                    "label": "✦",
+                    "value": "✦"
+                },
+                {
+                    "label": "◆",
+                    "value": "◆"
+                },
+                {
+                    "label": "★",
+                    "value": "★"
+                },
+                {
+                    "label": "☰",
+                    "value": "☰"
+                },
+                {
+                    "label": "⚡",
+                    "value": "⚡"
+                }
+            ],
+            "validationMessages": {
+                "required": "الأيقونة مطلوبة"
+            }
+        },
+        {
+            "key": "brandName",
+            "label": "اسم الهوية",
+            "type": "text",
+            "formTab": "content",
+            "group": "header",
+            "order": 6,
+            "width": "half",
+            "required": true,
+            "defaultValue": "Safhat",
+            "placeholder": "مثال: Safhat",
+            "minLength": 2,
+            "maxLength": 40,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "اسم الهوية مطلوب",
+                "minLength": "اسم الهوية قصير جدًا",
+                "maxLength": "اسم الهوية يجب ألا يتجاوز 40 حرف"
+            }
+        },
+        {
+            "key": "brandCaption",
+            "label": "وصف الهوية",
+            "type": "text",
+            "formTab": "content",
+            "group": "header",
+            "order": 7,
+            "width": "full",
+            "required": false,
+            "defaultValue": "Template Starter",
+            "placeholder": "مثال: Template Starter",
+            "maxLength": 60,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "maxLength": "وصف الهوية يجب ألا يتجاوز 60 حرف"
+            }
+        },
+        {
+            "key": "navigationLinks",
+            "label": "روابط التنقل",
+            "type": "repeater",
+            "formTab": "content",
+            "group": "header",
+            "order": 8,
+            "width": "full",
+            "required": false,
+            "minItems": 0,
+            "maxItems": 6,
+            "itemLabelField": "label",
+            "addButtonLabel": "إضافة رابط",
+            "defaultValue": [
+                {
+                    "label": "الرئيسية",
+                    "url": "#"
+                },
+                {
+                    "label": "المحتوى",
+                    "url": "#"
+                },
+                {
+                    "label": "التواصل",
+                    "url": "#"
+                }
+            ],
+            "itemFields": [
+                {
+                    "key": "label",
+                    "label": "اسم الرابط",
+                    "type": "text",
+                    "required": true,
+                    "placeholder": "مثال: الرئيسية",
+                    "minLength": 2,
+                    "maxLength": 30,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "url",
+                    "label": "الرابط",
+                    "type": "url",
+                    "required": true,
+                    "placeholder": "# أو https://example.com",
+                    "defaultValue": "#",
+                    "pattern": "^(#|https?:\\/\\/.+)$",
+                    "patternMessage": "الرابط يجب أن يكون # أو يبدأ بـ http أو https"
+                }
+            ],
+            "validationMessages": {
+                "maxItems": "لا يمكن إضافة أكثر من 6 روابط"
+            }
+        },
+        {
+            "key": "eyebrow",
+            "label": "النص الصغير أعلى العنوان",
+            "type": "text",
+            "formTab": "content",
+            "group": "hero",
+            "order": 9,
+            "width": "half",
+            "required": true,
+            "defaultValue": "Framework Template",
+            "placeholder": "مثال: Framework Template",
+            "minLength": 2,
+            "maxLength": 60,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "النص الصغير مطلوب",
+                "maxLength": "النص الصغير يجب ألا يتجاوز 60 حرف"
+            }
+        },
+        {
+            "key": "heroTitle",
+            "label": "العنوان الرئيسي",
+            "type": "text",
+            "formTab": "content",
+            "group": "hero",
+            "order": 10,
+            "width": "full",
+            "required": true,
+            "defaultValue": "Reusable Template Framework",
+            "placeholder": "اكتب العنوان الرئيسي",
+            "minLength": 3,
+            "maxLength": 90,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "العنوان الرئيسي مطلوب",
+                "minLength": "العنوان قصير جدًا",
+                "maxLength": "العنوان يجب ألا يتجاوز 90 حرف"
+            }
+        },
+        {
+            "key": "heroDescription",
+            "label": "وصف العنوان الرئيسي",
+            "type": "textarea",
+            "formTab": "content",
+            "group": "hero",
+            "order": 11,
+            "width": "full",
+            "required": true,
+            "defaultValue": "A clean starter design that helps you build new Safhat templates faster using reusable sections, fields, validations, lists, repeaters, and design controls.",
+            "placeholder": "اكتب وصف مختصر",
+            "rows": 4,
+            "minLength": 10,
+            "maxLength": 260,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "وصف العنوان مطلوب",
+                "minLength": "الوصف قصير جدًا",
+                "maxLength": "الوصف يجب ألا يتجاوز 260 حرف"
+            }
+        },
+        {
+            "key": "showCta",
+            "label": "إظهار أزرار الدعوة للإجراء",
+            "type": "select",
+            "formTab": "content",
+            "group": "hero",
+            "order": 12,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر هل تريد إظهار الأزرار"
+            }
+        },
+        {
+            "key": "primaryButtonText",
+            "label": "نص الزر الأساسي",
+            "type": "text",
+            "formTab": "content",
+            "group": "hero",
+            "order": 13,
+            "width": "half",
+            "requiredWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "defaultValue": "ابدأ الآن",
+            "placeholder": "مثال: ابدأ الآن",
+            "minLength": 2,
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "required": "نص الزر الأساسي مطلوب",
+                "maxLength": "نص الزر يجب ألا يتجاوز 30 حرف"
+            }
+        },
+        {
+            "key": "primaryButtonUrl",
+            "label": "رابط الزر الأساسي",
+            "type": "url",
+            "formTab": "content",
+            "group": "hero",
+            "order": 14,
+            "width": "half",
+            "requiredWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "defaultValue": "#",
+            "placeholder": "# أو https://example.com",
+            "pattern": "^(#|https?:\\/\\/.+)$",
+            "patternMessage": "الرابط يجب أن يكون # أو يبدأ بـ http أو https",
+            "validationMessages": {
+                "required": "رابط الزر الأساسي مطلوب",
+                "pattern": "رابط الزر الأساسي غير صحيح"
+            }
+        },
+        {
+            "key": "secondaryButtonText",
+            "label": "نص الزر الثانوي",
+            "type": "text",
+            "formTab": "content",
+            "group": "hero",
+            "order": 15,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "defaultValue": "معرفة المزيد",
+            "placeholder": "مثال: معرفة المزيد",
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true,
+            "validationMessages": {
+                "maxLength": "نص الزر يجب ألا يتجاوز 30 حرف"
+            }
+        },
+        {
+            "key": "secondaryButtonUrl",
+            "label": "رابط الزر الثانوي",
+            "type": "url",
+            "formTab": "content",
+            "group": "hero",
+            "order": 16,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "defaultValue": "#",
+            "placeholder": "# أو https://example.com",
+            "pattern": "^(#|https?:\\/\\/.+)$",
+            "patternMessage": "الرابط يجب أن يكون # أو يبدأ بـ http أو https",
+            "validationMessages": {
+                "pattern": "رابط الزر الثانوي غير صحيح"
+            }
+        },
+        {
+            "key": "showHeroMedia",
+            "label": "إظهار صورة الهيرو",
+            "type": "select",
+            "formTab": "media",
+            "group": "heroMedia",
+            "order": 17,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر هل تريد إظهار صورة الهيرو"
+            }
+        },
+        {
+            "key": "heroImage",
+            "label": "صورة الهيرو",
+            "type": "image",
+            "formTab": "media",
+            "group": "heroMedia",
+            "order": 18,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showHeroMedia",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showHeroMedia",
+                "equals": "yes"
+            },
+            "defaultValue": "https://placehold.co/900x1100/eef2ff/2563eb?text=Template+Media",
+            "placeholder": "ارفع صورة أو لقطة للقالب",
+            "hint": "يفضل استخدام صورة عالية الجودة",
+            "accept": [
+                "image/png",
+                "image/jpeg",
+                "image/webp"
+            ],
+            "maxSizeMb": 5,
+            "minWidth": 600,
+            "minHeight": 600,
+            "aspectRatio": "auto",
+            "crop": true,
+            "validationMessages": {
+                "required": "الصورة مطلوبة عند تفعيل صورة الهيرو",
+                "accept": "الصورة يجب أن تكون PNG أو JPG أو WEBP",
+                "maxSizeMb": "حجم الصورة يجب ألا يتجاوز 5MB"
+            }
+        },
+        {
+            "key": "heroImageAlt",
+            "label": "وصف الصورة",
+            "type": "text",
+            "formTab": "media",
+            "group": "heroMedia",
+            "order": 19,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showHeroMedia",
+                "equals": "yes"
+            },
+            "defaultValue": "Template image",
+            "placeholder": "وصف مختصر للصورة",
+            "maxLength": 80,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "mediaBadge",
+            "label": "شارة الصورة",
+            "type": "text",
+            "formTab": "media",
+            "group": "heroMedia",
+            "order": 20,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showHeroMedia",
+                "equals": "yes"
+            },
+            "defaultValue": "Reusable",
+            "placeholder": "مثال: Reusable",
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "showStats",
+            "label": "إظهار الإحصائيات",
+            "type": "select",
+            "formTab": "content",
+            "group": "stats",
+            "order": 21,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "key": "stats",
+            "label": "الإحصائيات",
+            "type": "repeater",
+            "formTab": "content",
+            "group": "stats",
+            "order": 22,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showStats",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showStats",
+                "equals": "yes"
+            },
+            "minItems": 1,
+            "maxItems": 4,
+            "itemLabelField": "label",
+            "addButtonLabel": "إضافة إحصائية",
+            "defaultValue": [
+                {
+                    "value": "12+",
+                    "label": "Sections"
+                },
+                {
+                    "value": "20+",
+                    "label": "Fields"
+                },
+                {
+                    "value": "100%",
+                    "label": "Reusable"
+                },
+                {
+                    "value": "RTL",
+                    "label": "Ready"
+                }
+            ],
+            "itemFields": [
+                {
+                    "key": "value",
+                    "label": "القيمة",
+                    "type": "text",
+                    "required": true,
+                    "placeholder": "مثال: 12+",
+                    "maxLength": 12,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "label",
+                    "label": "العنوان",
+                    "type": "text",
+                    "required": true,
+                    "placeholder": "مثال: Sections",
+                    "maxLength": 40,
+                    "trim": true,
+                    "sanitize": true
+                }
+            ],
+            "validationMessages": {
+                "minItems": "أضف إحصائية واحدة على الأقل",
+                "maxItems": "لا يمكن إضافة أكثر من 4 إحصائيات"
+            }
+        },
+        {
+            "key": "contentLabel",
+            "label": "تصنيف قسم المحتوى",
+            "type": "text",
+            "formTab": "content",
+            "group": "content",
+            "order": 23,
+            "width": "half",
+            "required": true,
+            "defaultValue": "Reusable Blocks",
+            "maxLength": 50,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "contentTitle",
+            "label": "عنوان قسم المحتوى",
+            "type": "text",
+            "formTab": "content",
+            "group": "content",
+            "order": 24,
+            "width": "full",
+            "required": true,
+            "defaultValue": "Build templates from flexible sections",
+            "minLength": 3,
+            "maxLength": 90,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "contentDescription",
+            "label": "وصف قسم المحتوى",
+            "type": "textarea",
+            "formTab": "content",
+            "group": "content",
+            "order": 25,
+            "width": "full",
+            "required": true,
+            "defaultValue": "Use this starter to understand how each section connects with fields, repeaters, lists, validation rules, and design controls.",
+            "rows": 3,
+            "minLength": 10,
+            "maxLength": 220,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "showFeatures",
+            "label": "إظهار البطاقات",
+            "type": "select",
+            "formTab": "content",
+            "group": "features",
+            "order": 26,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "key": "features",
+            "label": "البطاقات",
+            "type": "repeater",
+            "formTab": "content",
+            "group": "features",
+            "order": 27,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showFeatures",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showFeatures",
+                "equals": "yes"
+            },
+            "minItems": 1,
+            "maxItems": 6,
+            "itemLabelField": "title",
+            "addButtonLabel": "إضافة بطاقة",
+            "defaultValue": [
+                {
+                    "icon": "✦",
+                    "title": "Fields",
+                    "description": "Text, textarea, image, color, select, list, repeater, URL, date, time, and more."
+                },
+                {
+                    "icon": "◇",
+                    "title": "Sections",
+                    "description": "Every editable block has data-section so the builder can target it easily."
+                },
+                {
+                    "icon": "⚡",
+                    "title": "Validation",
+                    "description": "Each field can support required, length, pattern, visibility, and custom messages."
+                }
+            ],
+            "itemFields": [
+                {
+                    "key": "icon",
+                    "label": "الأيقونة",
+                    "type": "icon",
+                    "required": true,
+                    "defaultValue": "✦",
+                    "maxLength": 4
+                },
+                {
+                    "key": "title",
+                    "label": "العنوان",
+                    "type": "text",
+                    "required": true,
+                    "maxLength": 60,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "description",
+                    "label": "الوصف",
+                    "type": "textarea",
+                    "required": true,
+                    "rows": 3,
+                    "maxLength": 180,
+                    "trim": true,
+                    "sanitize": true
+                }
+            ],
+            "validationMessages": {
+                "minItems": "أضف بطاقة واحدة على الأقل",
+                "maxItems": "لا يمكن إضافة أكثر من 6 بطاقات"
+            }
+        },
+        {
+            "key": "showGallery",
+            "label": "إظهار قسم المعرض",
+            "type": "select",
+            "formTab": "content",
+            "group": "gallery",
+            "order": 28,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "key": "galleryLabel",
+            "label": "تصنيف المعرض",
+            "type": "text",
+            "formTab": "content",
+            "group": "gallery",
+            "order": 29,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "defaultValue": "Repeater Example",
+            "maxLength": 50,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "galleryTitle",
+            "label": "عنوان المعرض",
+            "type": "text",
+            "formTab": "content",
+            "group": "gallery",
+            "order": 30,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "defaultValue": "Gallery or repeated content",
+            "minLength": 3,
+            "maxLength": 90,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "galleryDescription",
+            "label": "وصف المعرض",
+            "type": "textarea",
+            "formTab": "content",
+            "group": "gallery",
+            "order": 31,
+            "width": "full",
+            "required": false,
+            "visibleWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "defaultValue": "This section can become projects, services, products, portfolio items, packages, or articles.",
+            "rows": 3,
+            "maxLength": 180,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "galleryItems",
+            "label": "عناصر المعرض",
+            "type": "repeater",
+            "formTab": "content",
+            "group": "gallery",
+            "order": 32,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "minItems": 1,
+            "maxItems": 6,
+            "itemLabelField": "title",
+            "addButtonLabel": "إضافة عنصر",
+            "defaultValue": [
+                {
+                    "image": "https://placehold.co/700x460/eef2ff/2563eb?text=Item+1",
+                    "title": "Reusable Card",
+                    "description": "Use this card for any repeated content.",
+                    "url": "#",
+                    "buttonText": "Open"
+                },
+                {
+                    "image": "https://placehold.co/700x460/f5f3ff/7c3aed?text=Item+2",
+                    "title": "Flexible Layout",
+                    "description": "Replace the content and use it in another template.",
+                    "url": "#",
+                    "buttonText": "Open"
+                },
+                {
+                    "image": "https://placehold.co/700x460/ecfeff/06b6d4?text=Item+3",
+                    "title": "Builder Ready",
+                    "description": "Selectors are clean and easy to control.",
+                    "url": "#",
+                    "buttonText": "Open"
+                }
+            ],
+            "itemFields": [
+                {
+                    "key": "image",
+                    "label": "الصورة",
+                    "type": "image",
+                    "required": true,
+                    "accept": [
+                        "image/png",
+                        "image/jpeg",
+                        "image/webp"
+                    ],
+                    "maxSizeMb": 5
+                },
+                {
+                    "key": "title",
+                    "label": "العنوان",
+                    "type": "text",
+                    "required": true,
+                    "maxLength": 70,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "description",
+                    "label": "الوصف",
+                    "type": "textarea",
+                    "required": true,
+                    "rows": 3,
+                    "maxLength": 180,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "url",
+                    "label": "الرابط",
+                    "type": "url",
+                    "required": false,
+                    "defaultValue": "#",
+                    "pattern": "^(#|https?:\\/\\/.+)$"
+                },
+                {
+                    "key": "buttonText",
+                    "label": "نص الرابط",
+                    "type": "text",
+                    "required": false,
+                    "defaultValue": "Open",
+                    "maxLength": 30,
+                    "trim": true,
+                    "sanitize": true
+                }
+            ]
+        },
+        {
+            "key": "showTags",
+            "label": "إظهار الوسوم",
+            "type": "select",
+            "formTab": "content",
+            "group": "tags",
+            "order": 33,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "key": "tagsLabel",
+            "label": "تصنيف الوسوم",
+            "type": "text",
+            "formTab": "content",
+            "group": "tags",
+            "order": 34,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "defaultValue": "List Example",
+            "maxLength": 50,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "tagsTitle",
+            "label": "عنوان الوسوم",
+            "type": "text",
+            "formTab": "content",
+            "group": "tags",
+            "order": 35,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "defaultValue": "Tags, skills, categories, or keywords",
+            "maxLength": 90,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "tagsDescription",
+            "label": "وصف الوسوم",
+            "type": "textarea",
+            "formTab": "content",
+            "group": "tags",
+            "order": 36,
+            "width": "full",
+            "required": false,
+            "visibleWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "defaultValue": "This list can be used for skills, tags, categories, tools, values, or quick highlights.",
+            "rows": 3,
+            "maxLength": 180,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "tags",
+            "label": "الوسوم",
+            "type": "list",
+            "formTab": "content",
+            "group": "tags",
+            "order": 37,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "listStyle": "tags",
+            "itemType": "text",
+            "minItems": 1,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "defaultValue": [
+                "HTML",
+                "CSS",
+                "JSON",
+                "Fields",
+                "Sections",
+                "Validation"
+            ],
+            "placeholder": "HTML\nCSS\nJSON",
+            "hint": "اكتب كل عنصر في سطر منفصل",
+            "validationMessages": {
+                "minItems": "أضف وسم واحد على الأقل",
+                "maxItems": "لا يمكن إضافة أكثر من 20 وسم",
+                "uniqueItems": "لا يمكن تكرار نفس الوسم"
+            }
+        },
+        {
+            "key": "showInteractions",
+            "label": "إظهار التفاعل",
+            "type": "select",
+            "formTab": "features",
+            "group": "interactions",
+            "order": 38,
+            "width": "half",
+            "required": true,
+            "defaultValue": "yes",
+            "options": [
+                {
+                    "label": "نعم",
+                    "value": "yes"
+                },
+                {
+                    "label": "لا",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "key": "interactionLabel",
+            "label": "تصنيف قسم التفاعل",
+            "type": "text",
+            "formTab": "features",
+            "group": "interactions",
+            "order": 39,
+            "width": "half",
+            "required": false,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Interactive Features",
+            "maxLength": 50,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "interactionTitle",
+            "label": "عنوان قسم التفاعل",
+            "type": "text",
+            "formTab": "features",
+            "group": "interactions",
+            "order": 40,
+            "width": "full",
+            "requiredWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Reusable interaction blocks",
+            "maxLength": 90,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "interactionDescription",
+            "label": "وصف قسم التفاعل",
+            "type": "textarea",
+            "formTab": "features",
+            "group": "interactions",
+            "order": 41,
+            "width": "full",
+            "required": false,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Use these blocks for messages, feedback, RSVP, confirmation, voting, or custom visitor responses.",
+            "rows": 3,
+            "maxLength": 180,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageBoxTitle",
+            "label": "عنوان صندوق الرسائل",
+            "type": "text",
+            "formTab": "features",
+            "group": "messages",
+            "order": 42,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Message Box",
+            "maxLength": 60,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageBoxDescription",
+            "label": "وصف صندوق الرسائل",
+            "type": "textarea",
+            "formTab": "features",
+            "group": "messages",
+            "order": 43,
+            "width": "full",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "A generic message block that can be used for feelings, wishes, comments, or testimonials.",
+            "rows": 3,
+            "maxLength": 180,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageModerationNotice",
+            "label": "رسالة التنبيه",
+            "type": "textarea",
+            "formTab": "features",
+            "group": "messages",
+            "order": 44,
+            "width": "full",
+            "required": false,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Your message may require approval before it appears publicly.",
+            "rows": 2,
+            "maxLength": 160,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageNamePlaceholder",
+            "label": "Placeholder الاسم",
+            "type": "text",
+            "formTab": "features",
+            "group": "messages",
+            "order": 45,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Your name",
+            "maxLength": 40,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageTextPlaceholder",
+            "label": "Placeholder الرسالة",
+            "type": "text",
+            "formTab": "features",
+            "group": "messages",
+            "order": 46,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Write your message...",
+            "maxLength": 60,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "messageButtonText",
+            "label": "نص زر الرسالة",
+            "type": "text",
+            "formTab": "features",
+            "group": "messages",
+            "order": 47,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Send Message",
+            "maxLength": 40,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseBoxTitle",
+            "label": "عنوان صندوق الاختيارات",
+            "type": "text",
+            "formTab": "features",
+            "group": "response",
+            "order": 48,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Response Box",
+            "maxLength": 60,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseBoxDescription",
+            "label": "وصف صندوق الاختيارات",
+            "type": "textarea",
+            "formTab": "features",
+            "group": "response",
+            "order": 49,
+            "width": "full",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "A generic response block that can be used for confirmation, RSVP, voting, or booking interest.",
+            "rows": 3,
+            "maxLength": 180,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseNamePlaceholder",
+            "label": "Placeholder اسم المستجيب",
+            "type": "text",
+            "formTab": "features",
+            "group": "response",
+            "order": 50,
+            "width": "half",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Your name",
+            "maxLength": 40,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseOptionOneIcon",
+            "label": "أيقونة الخيار الأول",
+            "type": "icon",
+            "formTab": "features",
+            "group": "response",
+            "order": 51,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "✅"
+        },
+        {
+            "key": "responseOptionOneText",
+            "label": "نص الخيار الأول",
+            "type": "text",
+            "formTab": "features",
+            "group": "response",
+            "order": 52,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Option 1",
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseOptionTwoIcon",
+            "label": "أيقونة الخيار الثاني",
+            "type": "icon",
+            "formTab": "features",
+            "group": "response",
+            "order": 53,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "❌"
+        },
+        {
+            "key": "responseOptionTwoText",
+            "label": "نص الخيار الثاني",
+            "type": "text",
+            "formTab": "features",
+            "group": "response",
+            "order": 54,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Option 2",
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "responseOptionThreeIcon",
+            "label": "أيقونة الخيار الثالث",
+            "type": "icon",
+            "formTab": "features",
+            "group": "response",
+            "order": 55,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "❓"
+        },
+        {
+            "key": "responseOptionThreeText",
+            "label": "نص الخيار الثالث",
+            "type": "text",
+            "formTab": "features",
+            "group": "response",
+            "order": 56,
+            "width": "third",
+            "required": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "defaultValue": "Option 3",
+            "maxLength": 30,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "footerText",
+            "label": "نص الفوتر",
+            "type": "text",
+            "formTab": "content",
+            "group": "footer",
+            "order": 57,
+            "width": "full",
+            "required": true,
+            "defaultValue": "Built with Safhat Template Framework",
+            "maxLength": 100,
+            "trim": true,
+            "sanitize": true
+        },
+        {
+            "key": "footerLinks",
+            "label": "روابط الفوتر",
+            "type": "repeater",
+            "formTab": "content",
+            "group": "footer",
+            "order": 58,
+            "width": "full",
+            "required": false,
+            "minItems": 0,
+            "maxItems": 4,
+            "itemLabelField": "label",
+            "addButtonLabel": "إضافة رابط",
+            "defaultValue": [
+                {
+                    "label": "Website",
+                    "url": "#"
+                },
+                {
+                    "label": "Contact",
+                    "url": "#"
+                }
+            ],
+            "itemFields": [
+                {
+                    "key": "label",
+                    "label": "اسم الرابط",
+                    "type": "text",
+                    "required": true,
+                    "maxLength": 30,
+                    "trim": true,
+                    "sanitize": true
+                },
+                {
+                    "key": "url",
+                    "label": "الرابط",
+                    "type": "url",
+                    "required": true,
+                    "defaultValue": "#",
+                    "pattern": "^(#|https?:\\/\\/.+)$"
+                }
+            ]
+        },
+        {
+            "key": "fontFamily",
+            "label": "نوع الخط",
+            "type": "font",
+            "formTab": "design",
+            "group": "typography",
+            "order": 59,
+            "width": "half",
+            "required": true,
+            "defaultValue": "Cairo",
+            "options": [
+                {
+                    "label": "Cairo",
+                    "value": "Cairo",
+                    "url": "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+                },
+                {
+                    "label": "Tajawal",
+                    "value": "Tajawal",
+                    "url": "https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+                },
+                {
+                    "label": "IBM Plex Sans Arabic",
+                    "value": "IBM Plex Sans Arabic",
+                    "url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+                }
+            ],
+            "validationMessages": {
+                "required": "اختر نوع الخط"
+            }
+        },
+        {
+            "key": "bgColor",
+            "label": "لون الخلفية",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 60,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#f8fafc",
+            "palette": [
+                "#f8fafc",
+                "#f9fafb",
+                "#f5f3ff",
+                "#eef2ff"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "surfaceColor",
+            "label": "لون السطح",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 61,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#ffffff",
+            "palette": [
+                "#ffffff",
+                "#f8fafc",
+                "#f9fafb",
+                "#fff7ed"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "surfaceAltColor",
+            "label": "لون السطح الثانوي",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 62,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#f8fafc",
+            "palette": [
+                "#f8fafc",
+                "#f1f5f9",
+                "#eef2ff",
+                "#f5f3ff"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "primaryColor",
+            "label": "اللون الأساسي",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 63,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#2563eb",
+            "palette": [
+                "#2563eb",
+                "#0ea5e9",
+                "#7c3aed",
+                "#059669"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "accentColor",
+            "label": "لون التمييز",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 64,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#7c3aed",
+            "palette": [
+                "#7c3aed",
+                "#06b6d4",
+                "#f59e0b",
+                "#ec4899"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "textColor",
+            "label": "لون النص",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 65,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#111827",
+            "palette": [
+                "#111827",
+                "#0f172a",
+                "#1f2937",
+                "#18181b"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "mutedColor",
+            "label": "لون النص الثانوي",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 66,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#64748b",
+            "palette": [
+                "#64748b",
+                "#6b7280",
+                "#71717a",
+                "#475569"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        },
+        {
+            "key": "borderColor",
+            "label": "لون الحدود",
+            "type": "color",
+            "formTab": "design",
+            "group": "colors",
+            "order": 67,
+            "width": "third",
+            "required": true,
+            "defaultValue": "#e5e7eb",
+            "palette": [
+                "#e5e7eb",
+                "#e2e8f0",
+                "#dbeafe",
+                "#ddd6fe"
+            ],
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            "patternMessage": "اختر لون صحيح"
+        }
+    ],
+    "sections": [
+        {
+            "key": "page",
+            "label": "الصفحة كاملة",
+            "selector": "[data-section='page']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": false,
+            "resizable": true,
+            "styleControls": [
+                "width",
+                "maxWidth",
+                "background",
+                "borderRadius",
+                "padding",
+                "margin",
+                "boxShadow"
+            ]
+        },
+        {
+            "key": "header",
+            "label": "الهيدر",
+            "selector": "[data-section='header']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "display",
+                "background",
+                "borderRadius",
+                "padding",
+                "gap",
+                "margin"
+            ]
+        },
+        {
+            "key": "brand",
+            "label": "الهوية",
+            "selector": "[data-section='brand']",
+            "type": "link",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "gap"
+            ]
+        },
+        {
+            "key": "navigation",
+            "label": "التنقل",
+            "selector": "[data-section='navigation']",
+            "type": "repeater",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "display",
+                "gap",
+                "fontSize",
+                "color"
+            ]
+        },
+        {
+            "key": "hero",
+            "label": "قسم الهيرو",
+            "selector": "[data-section='hero']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "display",
+                "gridTemplateColumns",
+                "gap",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "heroContent",
+            "label": "محتوى الهيرو",
+            "selector": "[data-section='heroContent']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "textAlign",
+                "alignItems",
+                "justifyContent"
+            ]
+        },
+        {
+            "key": "eyebrow",
+            "label": "النص الصغير",
+            "selector": "[data-section='eyebrow']",
+            "type": "text",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": false,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "heroTitle",
+            "label": "العنوان الرئيسي",
+            "selector": "[data-section='heroTitle']",
+            "type": "text",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": false,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "textAlign",
+                "lineHeight",
+                "letterSpacing",
+                "margin"
+            ]
+        },
+        {
+            "key": "heroDescription",
+            "label": "وصف الهيرو",
+            "selector": "[data-section='heroDescription']",
+            "type": "text",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": false,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "textAlign",
+                "lineHeight",
+                "margin"
+            ]
+        },
+        {
+            "key": "cta",
+            "label": "أزرار الإجراء",
+            "selector": "[data-section='cta']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showCta",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "display",
+                "gap",
+                "justifyContent",
+                "margin"
+            ]
+        },
+        {
+            "key": "heroMedia",
+            "label": "صورة الهيرو",
+            "selector": "[data-section='heroMedia']",
+            "type": "image",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showHeroMedia",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "width",
+                "height",
+                "borderRadius",
+                "objectFit",
+                "objectPosition",
+                "margin",
+                "padding"
+            ]
+        },
+        {
+            "key": "stats",
+            "label": "الإحصائيات",
+            "selector": "[data-section='stats']",
+            "type": "repeater",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showStats",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "display",
+                "gridTemplateColumns",
+                "gap",
+                "margin"
+            ]
+        },
+        {
+            "key": "mainContent",
+            "label": "المحتوى الرئيسي",
+            "selector": "[data-section='mainContent']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "contentHeading",
+            "label": "عنوان المحتوى",
+            "selector": "[data-section='contentHeading']",
+            "type": "text",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": false,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "textAlign",
+                "lineHeight",
+                "margin"
+            ]
+        },
+        {
+            "key": "features",
+            "label": "البطاقات",
+            "selector": "[data-section='features']",
+            "type": "repeater",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showFeatures",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "display",
+                "gridTemplateColumns",
+                "gap"
+            ]
+        },
+        {
+            "key": "gallery",
+            "label": "المعرض",
+            "selector": "[data-section='gallery']",
+            "type": "repeater",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showGallery",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "tags",
+            "label": "الوسوم",
+            "selector": "[data-section='tags']",
+            "type": "list",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showTags",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "display",
+                "gap",
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "interactions",
+            "label": "التفاعل",
+            "selector": "[data-section='interactions']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "visibleWhen": {
+                "field": "showInteractions",
+                "equals": "yes"
+            },
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "feelings",
+            "label": "صندوق الرسائل",
+            "selector": "[data-section='feelings']",
+            "type": "feature",
+            "feature": "feelings",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "rsvp",
+            "label": "صندوق الاختيارات",
+            "selector": "[data-section='rsvp']",
+            "type": "feature",
+            "feature": "rsvp",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "background",
+                "borderRadius",
+                "padding",
+                "margin"
+            ]
+        },
+        {
+            "key": "footer",
+            "label": "الفوتر",
+            "selector": "[data-section='footer']",
+            "type": "container",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "display",
+                "background",
+                "borderRadius",
+                "padding",
+                "margin",
+                "gap"
+            ]
+        },
+        {
+            "key": "footerText",
+            "label": "نص الفوتر",
+            "selector": "[data-section='footerText']",
+            "type": "text",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": false,
+            "styleControls": [
+                "fontSize",
+                "fontWeight",
+                "color",
+                "textAlign",
+                "margin"
+            ]
+        },
+        {
+            "key": "footerLinks",
+            "label": "روابط الفوتر",
+            "selector": "[data-section='footerLinks']",
+            "type": "repeater",
+            "editable": true,
+            "visible": true,
+            "movable": true,
+            "resizable": true,
+            "styleControls": [
+                "display",
+                "gap",
+                "fontSize",
+                "color"
+            ]
+        }
+    ]
+}

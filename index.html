@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="{{language}}" dir="{{direction}}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{pageTitle}}</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body style="
+    --bgColor: {{bgColor}};
+    --surfaceColor: {{surfaceColor}};
+    --surfaceAltColor: {{surfaceAltColor}};
+    --primaryColor: {{primaryColor}};
+    --accentColor: {{accentColor}};
+    --textColor: {{textColor}};
+    --mutedColor: {{mutedColor}};
+    --borderColor: {{borderColor}};
+    --fontFamily: {{fontFamily}};
+">
+
+    <main class="
+        template-framework 
+        layout-{{layoutStyle}} 
+        show-media-{{showHeroMedia}} 
+        show-cta-{{showCta}} 
+        show-stats-{{showStats}} 
+        show-features-{{showFeatures}} 
+        show-gallery-{{showGallery}} 
+        show-tags-{{showTags}} 
+        show-interactions-{{showInteractions}}
+    ">
+
+        <div class="framework-bg" aria-hidden="true">
+            <span class="bg-orb bg-orb-1"></span>
+            <span class="bg-orb bg-orb-2"></span>
+            <span class="bg-grid"></span>
+        </div>
+
+        <section class="template-shell" data-section="page">
+
+            <header class="template-header" data-section="header">
+                <a class="brand" href="#" data-section="brand">
+                    <span class="brand-icon">{{brandIcon}}</span>
+                    <span>
+                        <strong>{{brandName}}</strong>
+                        <small>{{brandCaption}}</small>
+                    </span>
+                </a>
+
+                <nav class="header-nav" data-section="navigation">
+                    {{#each navigationLinks}}
+                    <a href="{{url}}">{{label}}</a>
+                    {{/each}}
+                </nav>
+            </header>
+
+            <section class="hero-section" data-section="hero">
+
+                <div class="hero-content" data-section="heroContent">
+
+                    <p class="eyebrow" data-section="eyebrow">
+                        {{eyebrow}}
+                    </p>
+
+                    <h1 class="hero-title" data-section="heroTitle">
+                        {{heroTitle}}
+                    </h1>
+
+                    <p class="hero-description" data-section="heroDescription">
+                        {{heroDescription}}
+                    </p>
+
+                    <div class="hero-actions" data-section="cta">
+                        <a class="primary-button" href="{{primaryButtonUrl}}">
+                            {{primaryButtonText}}
+                        </a>
+
+                        <a class="secondary-button" href="{{secondaryButtonUrl}}">
+                            {{secondaryButtonText}}
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="hero-media" data-section="heroMedia">
+                    <div class="media-card">
+                        <img src="{{heroImage}}" alt="{{heroImageAlt}}" />
+                    </div>
+                    <span class="media-badge">{{mediaBadge}}</span>
+                </div>
+
+            </section>
+
+            <section class="stats-section" data-section="stats">
+                {{#each stats}}
+                <article class="stat-card">
+                    <strong>{{value}}</strong>
+                    <span>{{label}}</span>
+                </article>
+                {{/each}}
+            </section>
+
+            <section class="content-section" data-section="mainContent">
+
+                <div class="section-heading" data-section="contentHeading">
+                    <span>{{contentLabel}}</span>
+                    <h2>{{contentTitle}}</h2>
+                    <p>{{contentDescription}}</p>
+                </div>
+
+                <div class="feature-grid" data-section="features">
+                    {{#each features}}
+                    <article class="feature-card">
+                        <div class="feature-icon">{{icon}}</div>
+                        <h3>{{title}}</h3>
+                        <p>{{description}}</p>
+                    </article>
+                    {{/each}}
+                </div>
+
+            </section>
+
+            <section class="gallery-section" data-section="gallery">
+
+                <div class="section-heading">
+                    <span>{{galleryLabel}}</span>
+                    <h2>{{galleryTitle}}</h2>
+                    <p>{{galleryDescription}}</p>
+                </div>
+
+                <div class="gallery-grid">
+                    {{#each galleryItems}}
+                    <article class="gallery-card">
+                        <img src="{{image}}" alt="{{title}}" />
+                        <div>
+                            <h3>{{title}}</h3>
+                            <p>{{description}}</p>
+                            <a href="{{url}}" target="_blank" rel="noopener noreferrer">
+                                {{buttonText}}
+                            </a>
+                        </div>
+                    </article>
+                    {{/each}}
+                </div>
+
+            </section>
+
+            <section class="tags-section" data-section="tags">
+
+                <div class="section-heading">
+                    <span>{{tagsLabel}}</span>
+                    <h2>{{tagsTitle}}</h2>
+                    <p>{{tagsDescription}}</p>
+                </div>
+
+                <div class="tags-list">
+                    {{#each tags}}
+                    <span>{{this}}</span>
+                    {{/each}}
+                </div>
+
+            </section>
+
+            <section class="interaction-section" data-section="interactions">
+
+                <div class="section-heading">
+                    <span>{{interactionLabel}}</span>
+                    <h2>{{interactionTitle}}</h2>
+                    <p>{{interactionDescription}}</p>
+                </div>
+
+                <div class="interaction-grid">
+
+                    <section class="interaction-card" data-section="feelings" data-feature="feelings">
+
+                        <h3>{{messageBoxTitle}}</h3>
+                        <p>{{messageBoxDescription}}</p>
+
+                        <div class="feature-form">
+                            <p class="feature-notice" data-feeling-notice>
+                                {{messageModerationNotice}}
+                            </p>
+
+                            <input type="text" placeholder="{{messageNamePlaceholder}}" maxlength="60"
+                                data-feeling-name />
+
+                            <textarea placeholder="{{messageTextPlaceholder}}" maxlength="220"
+                                data-feeling-message></textarea>
+
+                            <button type="button" data-send-feeling>
+                                {{messageButtonText}}
+                            </button>
+
+                            <p class="feature-result" data-feeling-result></p>
+                        </div>
+
+                        <div class="messages-list" data-feelings-list></div>
+
+                    </section>
+
+                    <section class="interaction-card" data-section="rsvp" data-feature="rsvp">
+
+                        <h3>{{responseBoxTitle}}</h3>
+                        <p>{{responseBoxDescription}}</p>
+
+                        <div class="feature-form">
+                            <input type="text" placeholder="{{responseNamePlaceholder}}" maxlength="60"
+                                data-rsvp-name />
+
+                            <div class="response-options">
+                                <button type="button" data-rsvp-status="option_1">
+                                    <span>{{responseOptionOneIcon}}</span>
+                                    <strong>{{responseOptionOneText}}</strong>
+                                </button>
+
+                                <button type="button" data-rsvp-status="option_2">
+                                    <span>{{responseOptionTwoIcon}}</span>
+                                    <strong>{{responseOptionTwoText}}</strong>
+                                </button>
+
+                                <button type="button" data-rsvp-status="option_3">
+                                    <span>{{responseOptionThreeIcon}}</span>
+                                    <strong>{{responseOptionThreeText}}</strong>
+                                </button>
+                            </div>
+
+                            <p class="feature-result" data-rsvp-message></p>
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+            <footer class="template-footer" data-section="footer">
+                <p data-section="footerText">
+                    {{footerText}}
+                </p>
+
+                <div class="footer-links" data-section="footerLinks">
+                    {{#each footerLinks}}
+                    <a href="{{url}}">{{label}}</a>
+                    {{/each}}
+                </div>
+            </footer>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

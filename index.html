@@ -1,255 +1,1636 @@
 <!DOCTYPE html>
-<html lang="{{language}}" dir="{{direction}}">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{pageTitle}}</title>
+    <title>Safhat Template Fields Framework</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body style="
-    --bgColor: {{bgColor}};
-    --surfaceColor: {{surfaceColor}};
-    --surfaceAltColor: {{surfaceAltColor}};
-    --primaryColor: {{primaryColor}};
-    --accentColor: {{accentColor}};
-    --textColor: {{textColor}};
-    --mutedColor: {{mutedColor}};
-    --borderColor: {{borderColor}};
-    --fontFamily: {{fontFamily}};
-">
+<body>
 
-    <main class="
-        template-framework 
-        layout-{{layoutStyle}} 
-        show-media-{{showHeroMedia}} 
-        show-cta-{{showCta}} 
-        show-stats-{{showStats}} 
-        show-features-{{showFeatures}} 
-        show-gallery-{{showGallery}} 
-        show-tags-{{showTags}} 
-        show-interactions-{{showInteractions}}
-    ">
-
-        <div class="framework-bg" aria-hidden="true">
-            <span class="bg-orb bg-orb-1"></span>
-            <span class="bg-orb bg-orb-2"></span>
-            <span class="bg-grid"></span>
+    <aside class="sidebar">
+        <div class="brand">
+            <span>◇</span>
+            <div>
+                <strong>Safhat Framework</strong>
+                <small>Template Fields Reference</small>
+            </div>
         </div>
 
-        <section class="template-shell" data-section="page">
+        <nav>
+            <a href="#intro">Introduction</a>
+            <a href="#field-structure">Field Structure</a>
+            <a href="#common-properties">Common Properties</a>
+            <a href="#validation">Validation</a>
+            <a href="#conditions">Conditions</a>
+            <a href="#text">Text</a>
+            <a href="#textarea">Textarea</a>
+            <a href="#select">Select</a>
+            <a href="#radio">Radio</a>
+            <a href="#color">Color</a>
+            <a href="#font">Font</a>
+            <a href="#icon">Icon</a>
+            <a href="#image">Image</a>
+            <a href="#url">URL</a>
+            <a href="#map">Map</a>
+            <a href="#youtube">YouTube</a>
+            <a href="#date">Date</a>
+            <a href="#time">Time</a>
+            <a href="#list">List</a>
+            <a href="#repeater">Repeater</a>
+            <a href="#features">Features</a>
+            <a href="#sections">Sections</a>
+            <a href="#full-template-json">Full template.json</a>
+        </nav>
+    </aside>
 
-            <header class="template-header" data-section="header">
-                <a class="brand" href="#" data-section="brand">
-                    <span class="brand-icon">{{brandIcon}}</span>
-                    <span>
-                        <strong>{{brandName}}</strong>
-                        <small>{{brandCaption}}</small>
-                    </span>
-                </a>
+    <main class="docs">
 
-                <nav class="header-nav" data-section="navigation">
-                    {{#each navigationLinks}}
-                    <a href="{{url}}">{{label}}</a>
-                    {{/each}}
-                </nav>
-            </header>
+        <section class="hero" id="intro">
+            <span class="badge">Safhat Template Framework</span>
+            <h1>Reusable Field Documentation for Building Templates</h1>
+            <p>
+                This page is not a wedding, graduation, or company template.
+                It is a developer reference page that shows every available field type,
+                how to use it in HTML, how to define it in template.json, and what properties it supports.
+            </p>
 
-            <section class="hero-section" data-section="hero">
+            <div class="hero-actions">
+                <a href="#field-structure">Start Reading</a>
+                <a href="#full-template-json">View Full JSON</a>
+            </div>
+        </section>
 
-                <div class="hero-content" data-section="heroContent">
-
-                    <p class="eyebrow" data-section="eyebrow">
-                        {{eyebrow}}
-                    </p>
-
-                    <h1 class="hero-title" data-section="heroTitle">
-                        {{heroTitle}}
-                    </h1>
-
-                    <p class="hero-description" data-section="heroDescription">
-                        {{heroDescription}}
-                    </p>
-
-                    <div class="hero-actions" data-section="cta">
-                        <a class="primary-button" href="{{primaryButtonUrl}}">
-                            {{primaryButtonText}}
-                        </a>
-
-                        <a class="secondary-button" href="{{secondaryButtonUrl}}">
-                            {{secondaryButtonText}}
-                        </a>
-                    </div>
-
+        <section class="section" id="field-structure">
+            <div class="section-title">
+                <span>01</span>
+                <div>
+                    <h2>Basic Field Structure</h2>
+                    <p>Every editable value in the HTML should have a matching field in template.json.</p>
                 </div>
+            </div>
 
-                <div class="hero-media" data-section="heroMedia">
-                    <div class="media-card">
-                        <img src="{{heroImage}}" alt="{{heroImageAlt}}" />
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>HTML usage</h3>
+                    <p>Use Mustache-style variables in your HTML.</p>
+
+                    <div class="code-card">
+                        <div class="code-header">
+                            <span>HTML</span>
+                            <button data-copy="html-basic">Copy</button>
+                        </div>
+                        <pre><code id="html-basic">&lt;h1 data-section="title"&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;
+
+&lt;p data-section="description"&gt;
+    &#123;&#123;description&#125;&#125;
+&lt;/p&gt;</code></pre>
                     </div>
-                    <span class="media-badge">{{mediaBadge}}</span>
-                </div>
-
-            </section>
-
-            <section class="stats-section" data-section="stats">
-                {{#each stats}}
-                <article class="stat-card">
-                    <strong>{{value}}</strong>
-                    <span>{{label}}</span>
                 </article>
-                {{/each}}
-            </section>
 
-            <section class="content-section" data-section="mainContent">
+                <article class="info-card">
+                    <h3>JSON usage</h3>
+                    <p>Define the same keys inside the fields array.</p>
 
-                <div class="section-heading" data-section="contentHeading">
-                    <span>{{contentLabel}}</span>
-                    <h2>{{contentTitle}}</h2>
-                    <p>{{contentDescription}}</p>
-                </div>
-
-                <div class="feature-grid" data-section="features">
-                    {{#each features}}
-                    <article class="feature-card">
-                        <div class="feature-icon">{{icon}}</div>
-                        <h3>{{title}}</h3>
-                        <p>{{description}}</p>
-                    </article>
-                    {{/each}}
-                </div>
-
-            </section>
-
-            <section class="gallery-section" data-section="gallery">
-
-                <div class="section-heading">
-                    <span>{{galleryLabel}}</span>
-                    <h2>{{galleryTitle}}</h2>
-                    <p>{{galleryDescription}}</p>
-                </div>
-
-                <div class="gallery-grid">
-                    {{#each galleryItems}}
-                    <article class="gallery-card">
-                        <img src="{{image}}" alt="{{title}}" />
-                        <div>
-                            <h3>{{title}}</h3>
-                            <p>{{description}}</p>
-                            <a href="{{url}}" target="_blank" rel="noopener noreferrer">
-                                {{buttonText}}
-                            </a>
+                    <div class="code-card">
+                        <div class="code-header">
+                            <span>template.json</span>
+                            <button data-copy="json-basic">Copy</button>
                         </div>
-                    </article>
-                    {{/each}}
+                        <pre><code id="json-basic">{
+  "fields": [
+    {
+      "key": "title",
+      "label": "Title",
+      "type": "text",
+      "required": true,
+      "defaultValue": "My Title"
+    },
+    {
+      "key": "description",
+      "label": "Description",
+      "type": "textarea",
+      "required": true,
+      "defaultValue": "Short description here"
+    }
+  ]
+}</code></pre>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="common-properties">
+            <div class="section-title">
+                <span>02</span>
+                <div>
+                    <h2>Common Field Properties</h2>
+                    <p>These properties can be used with most field types.</p>
                 </div>
+            </div>
 
-            </section>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>key</code></td>
+                            <td>string</td>
+                            <td>The variable name used in HTML like <code>&#123;&#123;title&#125;&#125;</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>label</code></td>
+                            <td>string</td>
+                            <td>The field label shown to the user in the form.</td>
+                        </tr>
+                        <tr>
+                            <td><code>type</code></td>
+                            <td>string</td>
+                            <td>The field type: text, image, select, color, repeater, etc.</td>
+                        </tr>
+                        <tr>
+                            <td><code>required</code></td>
+                            <td>boolean</td>
+                            <td>Makes the field required.</td>
+                        </tr>
+                        <tr>
+                            <td><code>defaultValue</code></td>
+                            <td>any</td>
+                            <td>The default value used before the user edits the field.</td>
+                        </tr>
+                        <tr>
+                            <td><code>placeholder</code></td>
+                            <td>string</td>
+                            <td>Text shown inside empty inputs.</td>
+                        </tr>
+                        <tr>
+                            <td><code>hint</code></td>
+                            <td>string</td>
+                            <td>Small help text under the field.</td>
+                        </tr>
+                        <tr>
+                            <td><code>formTab</code></td>
+                            <td>string</td>
+                            <td>Groups fields into tabs: content, design, media, features, settings.</td>
+                        </tr>
+                        <tr>
+                            <td><code>group</code></td>
+                            <td>string</td>
+                            <td>Groups related fields inside the same tab.</td>
+                        </tr>
+                        <tr>
+                            <td><code>order</code></td>
+                            <td>number</td>
+                            <td>Controls field order in the form.</td>
+                        </tr>
+                        <tr>
+                            <td><code>width</code></td>
+                            <td>string</td>
+                            <td>Form width: full, half, third.</td>
+                        </tr>
+                        <tr>
+                            <td><code>visibleWhen</code></td>
+                            <td>object</td>
+                            <td>Shows the field only when a condition is true.</td>
+                        </tr>
+                        <tr>
+                            <td><code>requiredWhen</code></td>
+                            <td>object</td>
+                            <td>Makes the field required only when a condition is true.</td>
+                        </tr>
+                        <tr>
+                            <td><code>validationMessages</code></td>
+                            <td>object</td>
+                            <td>Custom error messages for validation.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <section class="tags-section" data-section="tags">
-
-                <div class="section-heading">
-                    <span>{{tagsLabel}}</span>
-                    <h2>{{tagsTitle}}</h2>
-                    <p>{{tagsDescription}}</p>
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Common field example</span>
+                    <button data-copy="common-field-example">Copy</button>
                 </div>
+                <pre><code id="common-field-example">{
+  "key": "title",
+  "label": "Title",
+  "type": "text",
+  "formTab": "content",
+  "group": "main",
+  "order": 1,
+  "width": "full",
+  "required": true,
+  "defaultValue": "Example Title",
+  "placeholder": "Write title here",
+  "hint": "This text appears as the main title",
+  "minLength": 3,
+  "maxLength": 80,
+  "trim": true,
+  "sanitize": true,
+  "validationMessages": {
+    "required": "Title is required",
+    "minLength": "Title is too short",
+    "maxLength": "Title is too long"
+  }
+}</code></pre>
+            </div>
+        </section>
 
-                <div class="tags-list">
-                    {{#each tags}}
-                    <span>{{this}}</span>
-                    {{/each}}
+        <section class="section" id="validation">
+            <div class="section-title">
+                <span>03</span>
+                <div>
+                    <h2>Validation Properties</h2>
+                    <p>Use these properties to control data quality before rendering the template.</p>
                 </div>
+            </div>
 
-            </section>
+            <div class="cards-grid">
+                <article class="mini-card">
+                    <h3>Text validation</h3>
+                    <p>Use for names, titles, short descriptions.</p>
+                    <code>minLength / maxLength / pattern</code>
+                </article>
 
-            <section class="interaction-section" data-section="interactions">
+                <article class="mini-card">
+                    <h3>Number validation</h3>
+                    <p>Use for age, price, count, percentage.</p>
+                    <code>min / max / step</code>
+                </article>
 
-                <div class="section-heading">
-                    <span>{{interactionLabel}}</span>
-                    <h2>{{interactionTitle}}</h2>
-                    <p>{{interactionDescription}}</p>
+                <article class="mini-card">
+                    <h3>List validation</h3>
+                    <p>Use for skills, tags, services.</p>
+                    <code>minItems / maxItems / uniqueItems</code>
+                </article>
+
+                <article class="mini-card">
+                    <h3>File validation</h3>
+                    <p>Use for images and uploaded media.</p>
+                    <code>accept / maxSizeMb / aspectRatio</code>
+                </article>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Validation example</span>
+                    <button data-copy="validation-example">Copy</button>
                 </div>
+                <pre><code id="validation-example">{
+  "key": "username",
+  "label": "Username",
+  "type": "text",
+  "required": true,
+  "minLength": 3,
+  "maxLength": 30,
+  "pattern": "^[a-zA-Z0-9_]+$",
+  "patternMessage": "Only letters, numbers, and underscore are allowed",
+  "trim": true,
+  "sanitize": true,
+  "validationMessages": {
+    "required": "Username is required",
+    "minLength": "Username must be at least 3 characters",
+    "maxLength": "Username must not exceed 30 characters",
+    "pattern": "Username format is invalid"
+  }
+}</code></pre>
+            </div>
+        </section>
 
-                <div class="interaction-grid">
+        <section class="section" id="conditions">
+            <div class="section-title">
+                <span>04</span>
+                <div>
+                    <h2>Conditional Visibility and Required Rules</h2>
+                    <p>Use conditions when a field should appear only after another field value is selected.</p>
+                </div>
+            </div>
 
-                    <section class="interaction-card" data-section="feelings" data-feature="feelings">
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>visibleWhen</h3>
+                    <p>Use it when the field should be hidden or shown based on another field.</p>
 
-                        <h3>{{messageBoxTitle}}</h3>
-                        <p>{{messageBoxDescription}}</p>
-
-                        <div class="feature-form">
-                            <p class="feature-notice" data-feeling-notice>
-                                {{messageModerationNotice}}
-                            </p>
-
-                            <input type="text" placeholder="{{messageNamePlaceholder}}" maxlength="60"
-                                data-feeling-name />
-
-                            <textarea placeholder="{{messageTextPlaceholder}}" maxlength="220"
-                                data-feeling-message></textarea>
-
-                            <button type="button" data-send-feeling>
-                                {{messageButtonText}}
-                            </button>
-
-                            <p class="feature-result" data-feeling-result></p>
+                    <div class="code-card">
+                        <div class="code-header">
+                            <span>visibleWhen</span>
+                            <button data-copy="visible-when-example">Copy</button>
                         </div>
+                        <pre><code id="visible-when-example">{
+  "key": "heroImage",
+  "label": "Hero Image",
+  "type": "image",
+  "visibleWhen": {
+    "field": "showHeroImage",
+    "equals": "yes"
+  }
+}</code></pre>
+                    </div>
+                </article>
 
-                        <div class="messages-list" data-feelings-list></div>
+                <article class="info-card">
+                    <h3>requiredWhen</h3>
+                    <p>Use it when the field becomes required only in a specific case.</p>
 
-                    </section>
-
-                    <section class="interaction-card" data-section="rsvp" data-feature="rsvp">
-
-                        <h3>{{responseBoxTitle}}</h3>
-                        <p>{{responseBoxDescription}}</p>
-
-                        <div class="feature-form">
-                            <input type="text" placeholder="{{responseNamePlaceholder}}" maxlength="60"
-                                data-rsvp-name />
-
-                            <div class="response-options">
-                                <button type="button" data-rsvp-status="option_1">
-                                    <span>{{responseOptionOneIcon}}</span>
-                                    <strong>{{responseOptionOneText}}</strong>
-                                </button>
-
-                                <button type="button" data-rsvp-status="option_2">
-                                    <span>{{responseOptionTwoIcon}}</span>
-                                    <strong>{{responseOptionTwoText}}</strong>
-                                </button>
-
-                                <button type="button" data-rsvp-status="option_3">
-                                    <span>{{responseOptionThreeIcon}}</span>
-                                    <strong>{{responseOptionThreeText}}</strong>
-                                </button>
-                            </div>
-
-                            <p class="feature-result" data-rsvp-message></p>
+                    <div class="code-card">
+                        <div class="code-header">
+                            <span>requiredWhen</span>
+                            <button data-copy="required-when-example">Copy</button>
                         </div>
+                        <pre><code id="required-when-example">{
+  "key": "heroImage",
+  "label": "Hero Image",
+  "type": "image",
+  "requiredWhen": {
+    "field": "showHeroImage",
+    "equals": "yes"
+  }
+}</code></pre>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-                    </section>
+        <section class="field-doc" id="text">
+            <div class="field-header">
+                <span class="field-type">text</span>
+                <h2>Text Field</h2>
+                <p>Use for short text values like name, title, badge, button text, city, role, or label.</p>
+            </div>
 
+            <div class="example-preview">
+                <label>Preview</label>
+                <input type="text" value="Professional Portfolio" readonly />
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="text-html">Copy</button>
+                    </div>
+                    <pre><code id="text-html">&lt;h1 data-section="title"&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;</code></pre>
                 </div>
 
-            </section>
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="text-json">Copy</button>
+                    </div>
+                    <pre><code id="text-json">{
+  "key": "title",
+  "label": "Title",
+  "type": "text",
+  "required": true,
+  "defaultValue": "Professional Portfolio",
+  "placeholder": "Write title",
+  "minLength": 3,
+  "maxLength": 80,
+  "trim": true,
+  "sanitize": true
+}</code></pre>
+                </div>
+            </div>
 
-            <footer class="template-footer" data-section="footer">
-                <p data-section="footerText">
-                    {{footerText}}
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>required</span>
+                <span>defaultValue</span>
+                <span>placeholder</span>
+                <span>minLength</span>
+                <span>maxLength</span>
+                <span>pattern</span>
+                <span>visibleWhen</span>
+                <span>requiredWhen</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="textarea">
+            <div class="field-header">
+                <span class="field-type">textarea</span>
+                <h2>Textarea Field</h2>
+                <p>Use for longer text like descriptions, messages, bios, summaries, service descriptions, or
+                    invitations.</p>
+            </div>
+
+            <div class="example-preview">
+                <label>Preview</label>
+                <textarea readonly>A clean description that explains the section or template content.</textarea>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="textarea-html">Copy</button>
+                    </div>
+                    <pre><code id="textarea-html">&lt;p data-section="description"&gt;
+    &#123;&#123;description&#125;&#125;
+&lt;/p&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="textarea-json">Copy</button>
+                    </div>
+                    <pre><code id="textarea-json">{
+  "key": "description",
+  "label": "Description",
+  "type": "textarea",
+  "required": true,
+  "defaultValue": "A clean description that explains the section.",
+  "placeholder": "Write description",
+  "rows": 4,
+  "minLength": 10,
+  "maxLength": 300,
+  "trim": true,
+  "sanitize": true
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>rows</span>
+                <span>minLength</span>
+                <span>maxLength</span>
+                <span>placeholder</span>
+                <span>trim</span>
+                <span>sanitize</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="select">
+            <div class="field-header">
+                <span class="field-type">select</span>
+                <h2>Select Field</h2>
+                <p>Use when the user must choose one value from predefined options.</p>
+            </div>
+
+            <div class="example-preview">
+                <label>Preview</label>
+                <select disabled>
+                    <option>Light</option>
+                    <option>Dark</option>
+                    <option>Premium</option>
+                </select>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="select-html">Copy</button>
+                    </div>
+                    <pre><code id="select-html">&lt;main class="theme-&#123;&#123;themeMode&#125;&#125;"&gt;
+    ...
+&lt;/main&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="select-json">Copy</button>
+                    </div>
+                    <pre><code id="select-json">{
+  "key": "themeMode",
+  "label": "Theme Mode",
+  "type": "select",
+  "required": true,
+  "defaultValue": "light",
+  "options": [
+    {
+      "label": "Light",
+      "value": "light"
+    },
+    {
+      "label": "Dark",
+      "value": "dark"
+    },
+    {
+      "label": "Premium",
+      "value": "premium"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>options</span>
+                <span>defaultValue</span>
+                <span>required</span>
+                <span>visibleWhen</span>
+                <span>requiredWhen</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="radio">
+            <div class="field-header">
+                <span class="field-type">radio</span>
+                <h2>Radio Field</h2>
+                <p>Use like select, but better when options are few and should be visible directly.</p>
+            </div>
+
+            <div class="example-preview inline-preview">
+                <label><input type="radio" checked disabled /> Personal</label>
+                <label><input type="radio" disabled /> Company</label>
+                <label><input type="radio" disabled /> Event</label>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>template.json</span>
+                    <button data-copy="radio-json">Copy</button>
+                </div>
+                <pre><code id="radio-json">{
+  "key": "templateMode",
+  "label": "Template Mode",
+  "type": "radio",
+  "required": true,
+  "defaultValue": "personal",
+  "options": [
+    {
+      "label": "Personal",
+      "value": "personal"
+    },
+    {
+      "label": "Company",
+      "value": "company"
+    },
+    {
+      "label": "Event",
+      "value": "event"
+    }
+  ]
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="field-doc" id="color">
+            <div class="field-header">
+                <span class="field-type">color</span>
+                <h2>Color Field</h2>
+                <p>Use for background, text, accent, primary, border, card, or button colors.</p>
+            </div>
+
+            <div class="example-preview color-preview">
+                <span style="background:#2563eb"></span>
+                <span style="background:#7c3aed"></span>
+                <span style="background:#06b6d4"></span>
+                <span style="background:#111827"></span>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="color-html">Copy</button>
+                    </div>
+                    <pre><code id="color-html">&lt;body style="
+    --primaryColor: &#123;&#123;primaryColor&#125;&#125;;
+    --accentColor: &#123;&#123;accentColor&#125;&#125;;
+"&gt;
+
+&lt;a class="button"&gt;Button&lt;/a&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="color-json">Copy</button>
+                    </div>
+                    <pre><code id="color-json">{
+  "key": "primaryColor",
+  "label": "Primary Color",
+  "type": "color",
+  "formTab": "design",
+  "required": true,
+  "defaultValue": "#2563eb",
+  "palette": [
+    "#2563eb",
+    "#7c3aed",
+    "#06b6d4",
+    "#111827"
+  ],
+  "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+  "patternMessage": "Please choose a valid color"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>defaultValue</span>
+                <span>palette</span>
+                <span>pattern</span>
+                <span>formTab: design</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="font">
+            <div class="field-header">
+                <span class="field-type">font</span>
+                <h2>Font Field</h2>
+                <p>Use to let the user choose one font for the whole template or for specific sections.</p>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="font-html">Copy</button>
+                    </div>
+                    <pre><code id="font-html">&lt;body style="--fontFamily: &#123;&#123;fontFamily&#125;&#125;;"&gt;
+
+&lt;main class="template"&gt;
+    ...
+&lt;/main&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="font-json">Copy</button>
+                    </div>
+                    <pre><code id="font-json">{
+  "key": "fontFamily",
+  "label": "Font Family",
+  "type": "font",
+  "formTab": "design",
+  "required": true,
+  "defaultValue": "Cairo",
+  "options": [
+    {
+      "label": "Cairo",
+      "value": "Cairo",
+      "url": "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&display=swap"
+    },
+    {
+      "label": "Tajawal",
+      "value": "Tajawal",
+      "url": "https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>options</span>
+                <span>url</span>
+                <span>defaultValue</span>
+                <span>formTab: design</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="icon">
+            <div class="field-header">
+                <span class="field-type">icon</span>
+                <h2>Icon Field</h2>
+                <p>Use for emoji icons, section icons, brand icons, badges, service icons, or decorative symbols.</p>
+            </div>
+
+            <div class="example-preview icon-preview">
+                <span>✨</span>
+                <span>🚀</span>
+                <span>💼</span>
+                <span>🎓</span>
+                <span>📍</span>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="icon-html">Copy</button>
+                    </div>
+                    <pre><code id="icon-html">&lt;span class="section-icon" data-section="icon"&gt;
+    &#123;&#123;icon&#125;&#125;
+&lt;/span&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="icon-json">Copy</button>
+                    </div>
+                    <pre><code id="icon-json">{
+  "key": "icon",
+  "label": "Icon",
+  "type": "icon",
+  "required": true,
+  "defaultValue": "✨",
+  "options": [
+    {
+      "label": "✨",
+      "value": "✨"
+    },
+    {
+      "label": "🚀",
+      "value": "🚀"
+    },
+    {
+      "label": "💼",
+      "value": "💼"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="field-doc important" id="image">
+            <div class="field-header">
+                <span class="field-type">image</span>
+                <h2>Image Field</h2>
+                <p>
+                    Use for hero images, profile pictures, logos, product images, event images, backgrounds,
+                    gallery items, certificates, or any uploaded visual.
                 </p>
+            </div>
 
-                <div class="footer-links" data-section="footerLinks">
-                    {{#each footerLinks}}
-                    <a href="{{url}}">{{label}}</a>
-                    {{/each}}
+            <div class="explain-box">
+                <h3>How image works</h3>
+                <p>
+                    In HTML, the image field value is used inside the <code>src</code> attribute.
+                    In template.json, you can control upload type, file size, aspect ratio, crop, width, and conditional
+                    visibility.
+                </p>
+            </div>
+
+            <div class="example-preview image-preview">
+                <img src="https://placehold.co/800x500/eef2ff/2563eb?text=Image+Field" alt="Image example" />
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="image-html">Copy</button>
+                    </div>
+                    <pre><code id="image-html">&lt;section class="hero-media" data-section="heroImage"&gt;
+    &lt;img src="&#123;&#123;heroImage&#125;&#125;" alt="&#123;&#123;heroImageAlt&#125;&#125;" /&gt;
+&lt;/section&gt;</code></pre>
                 </div>
-            </footer>
 
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="image-json">Copy</button>
+                    </div>
+                    <pre><code id="image-json">{
+  "key": "heroImage",
+  "label": "Hero Image",
+  "type": "image",
+  "formTab": "media",
+  "group": "hero",
+  "required": true,
+  "defaultValue": "https://placehold.co/900x600/eef2ff/2563eb?text=Hero+Image",
+  "placeholder": "Upload hero image",
+  "hint": "Recommended size: 900x600 or larger",
+  "accept": [
+    "image/png",
+    "image/jpeg",
+    "image/webp"
+  ],
+  "maxSizeMb": 5,
+  "minWidth": 600,
+  "minHeight": 400,
+  "aspectRatio": "3:2",
+  "crop": true,
+  "validationMessages": {
+    "required": "Image is required",
+    "accept": "Only PNG, JPG, and WEBP are allowed",
+    "maxSizeMb": "Image must be less than 5MB",
+    "minWidth": "Image width is too small",
+    "minHeight": "Image height is too small"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image Property</th>
+                            <th>Example</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>accept</code></td>
+                            <td><code>["image/png", "image/jpeg"]</code></td>
+                            <td>Controls allowed file types.</td>
+                        </tr>
+                        <tr>
+                            <td><code>maxSizeMb</code></td>
+                            <td><code>5</code></td>
+                            <td>Maximum upload size.</td>
+                        </tr>
+                        <tr>
+                            <td><code>minWidth</code></td>
+                            <td><code>600</code></td>
+                            <td>Minimum image width.</td>
+                        </tr>
+                        <tr>
+                            <td><code>minHeight</code></td>
+                            <td><code>400</code></td>
+                            <td>Minimum image height.</td>
+                        </tr>
+                        <tr>
+                            <td><code>aspectRatio</code></td>
+                            <td><code>1:1</code>, <code>3:4</code>, <code>16:9</code>, <code>auto</code></td>
+                            <td>Recommended or required crop ratio.</td>
+                        </tr>
+                        <tr>
+                            <td><code>crop</code></td>
+                            <td><code>true</code></td>
+                            <td>Allows image cropping before saving.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>accept</span>
+                <span>maxSizeMb</span>
+                <span>minWidth</span>
+                <span>minHeight</span>
+                <span>aspectRatio</span>
+                <span>crop</span>
+                <span>visibleWhen</span>
+                <span>requiredWhen</span>
+            </div>
+        </section>
+
+        <section class="field-doc" id="url">
+            <div class="field-header">
+                <span class="field-type">url</span>
+                <h2>URL Field</h2>
+                <p>Use for website links, portfolio links, social links, project links, external buttons, or contact
+                    links.</p>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="url-html">Copy</button>
+                    </div>
+                    <pre><code id="url-html">&lt;a href="&#123;&#123;websiteUrl&#125;&#125;" target="_blank" rel="noopener"&gt;
+    Visit Website
+&lt;/a&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="url-json">Copy</button>
+                    </div>
+                    <pre><code id="url-json">{
+  "key": "websiteUrl",
+  "label": "Website URL",
+  "type": "url",
+  "required": false,
+  "defaultValue": "#",
+  "placeholder": "https://example.com",
+  "pattern": "^(#|https?:\\/\\/.+)$",
+  "patternMessage": "URL must be # or start with http or https"
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="field-doc" id="map">
+            <div class="field-header">
+                <span class="field-type">map</span>
+                <h2>Map Field</h2>
+                <p>Use for event locations, business addresses, office locations, clinic locations, or venue links.</p>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="map-html">Copy</button>
+                    </div>
+                    <pre><code id="map-html">&lt;a href="&#123;&#123;locationUrl&#125;&#125;" target="_blank" rel="noopener" data-section="location"&gt;
+    Open Location
+&lt;/a&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="map-json">Copy</button>
+                    </div>
+                    <pre><code id="map-json">{
+  "key": "locationUrl",
+  "label": "Location",
+  "type": "map",
+  "formTab": "location",
+  "required": true,
+  "placeholder": "Choose location from map",
+  "hint": "The selected location will be used as a clickable link",
+  "provider": "google",
+  "returnType": "url",
+  "pattern": "^https?:\\/\\/.+",
+  "patternMessage": "Location URL must start with http or https"
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="field-doc" id="youtube">
+            <div class="field-header">
+                <span class="field-type">youtube</span>
+                <h2>YouTube Field</h2>
+                <p>Use for background audio, video embeds, product videos, event music, or intro videos.</p>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>template.json</span>
+                    <button data-copy="youtube-json">Copy</button>
+                </div>
+                <pre><code id="youtube-json">{
+  "key": "soundUrl",
+  "label": "YouTube Sound URL",
+  "type": "youtube",
+  "formTab": "media",
+  "required": false,
+  "placeholder": "https://youtu.be/...",
+  "hint": "Add a YouTube link to play as background sound",
+  "allowedDomains": [
+    "youtube.com",
+    "youtu.be"
+  ],
+  "pattern": "^$|^https?:\\/\\/.+",
+  "patternMessage": "URL must start with http or https"
+}</code></pre>
+            </div>
+        </section>
+
+        <section class="field-doc" id="date">
+            <div class="field-header">
+                <span class="field-type">date</span>
+                <h2>Date Field</h2>
+                <p>Use for event dates, graduation dates, launch dates, deadlines, appointments, or experience dates.
+                </p>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="date-html">Copy</button>
+                    </div>
+                    <pre><code id="date-html">&lt;time data-section="date"&gt;&#123;&#123;date&#125;&#125;&lt;/time&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="date-json">Copy</button>
+                    </div>
+                    <pre><code id="date-json">{
+  "key": "date",
+  "label": "Date",
+  "type": "date",
+  "required": true,
+  "defaultValue": "",
+  "placeholder": "Choose date",
+  "minDate": "today",
+  "validationMessages": {
+    "required": "Date is required",
+    "minDate": "Date cannot be in the past"
+  }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="field-doc" id="time">
+            <div class="field-header">
+                <span class="field-type">time</span>
+                <h2>Time Field</h2>
+                <p>Use for event time, appointment time, schedule time, opening hours, or session time.</p>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="time-html">Copy</button>
+                    </div>
+                    <pre><code id="time-html">&lt;span data-section="time"&gt;&#123;&#123;time&#125;&#125;&lt;/span&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="time-json">Copy</button>
+                    </div>
+                    <pre><code id="time-json">{
+  "key": "time",
+  "label": "Time",
+  "type": "time",
+  "required": false,
+  "defaultValue": "20:00",
+  "placeholder": "Choose time"
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="field-doc important" id="list">
+            <div class="field-header">
+                <span class="field-type">list</span>
+                <h2>List Field</h2>
+                <p>
+                    Use when the user should enter a simple list of values:
+                    skills, tags, tools, services, features, names, categories, or keywords.
+                </p>
+            </div>
+
+            <div class="example-preview tags-preview">
+                <span>Angular</span>
+                <span>Firebase</span>
+                <span>TypeScript</span>
+                <span>UI/UX</span>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="list-html">Copy</button>
+                    </div>
+                    <pre><code id="list-html">&lt;div class="tags-list" data-section="skills"&gt;
+    &#123;&#123;#each skills&#125;&#125;
+    &lt;span&gt;&#123;&#123;this&#125;&#125;&lt;/span&gt;
+    &#123;&#123;/each&#125;&#125;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="list-json">Copy</button>
+                    </div>
+                    <pre><code id="list-json">{
+  "key": "skills",
+  "label": "Skills",
+  "type": "list",
+  "formTab": "content",
+  "required": true,
+  "listStyle": "tags",
+  "itemType": "text",
+  "minItems": 1,
+  "maxItems": 20,
+  "uniqueItems": true,
+  "defaultValue": [
+    "Angular",
+    "Firebase",
+    "TypeScript",
+    "UI/UX"
+  ],
+  "placeholder": "Angular\\nFirebase\\nTypeScript",
+  "hint": "Write each item on a new line",
+  "validationMessages": {
+    "minItems": "Add at least one item",
+    "maxItems": "You cannot add more than 20 items",
+    "uniqueItems": "Duplicate items are not allowed"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>listStyle</span>
+                <span>itemType</span>
+                <span>minItems</span>
+                <span>maxItems</span>
+                <span>uniqueItems</span>
+                <span>defaultValue array</span>
+            </div>
+        </section>
+
+        <section class="field-doc important" id="repeater">
+            <div class="field-header">
+                <span class="field-type">repeater</span>
+                <h2>Repeater Field</h2>
+                <p>
+                    Use when each item has multiple fields.
+                    Perfect for projects, services, packages, team members, testimonials, FAQ, timeline, products, and
+                    gallery items.
+                </p>
+            </div>
+
+            <div class="example-preview repeater-preview">
+                <article>
+                    <strong>Project Title</strong>
+                    <p>Project description with URL.</p>
+                </article>
+                <article>
+                    <strong>Project Title</strong>
+                    <p>Project description with URL.</p>
+                </article>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="repeater-html">Copy</button>
+                    </div>
+                    <pre><code id="repeater-html">&lt;div class="projects-grid" data-section="projects"&gt;
+    &#123;&#123;#each projects&#125;&#125;
+    &lt;article class="project-card"&gt;
+        &lt;h3&gt;&#123;&#123;title&#125;&#125;&lt;/h3&gt;
+        &lt;p&gt;&#123;&#123;description&#125;&#125;&lt;/p&gt;
+        &lt;a href="&#123;&#123;url&#125;&#125;" target="_blank" rel="noopener"&gt;
+            View Project
+        &lt;/a&gt;
+    &lt;/article&gt;
+    &#123;&#123;/each&#125;&#125;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="repeater-json">Copy</button>
+                    </div>
+                    <pre><code id="repeater-json">{
+  "key": "projects",
+  "label": "Projects",
+  "type": "repeater",
+  "formTab": "content",
+  "required": true,
+  "minItems": 1,
+  "maxItems": 6,
+  "itemLabelField": "title",
+  "addButtonLabel": "Add Project",
+  "defaultValue": [
+    {
+      "title": "Project One",
+      "description": "Short project description.",
+      "url": "#"
+    }
+  ],
+  "itemFields": [
+    {
+      "key": "title",
+      "label": "Project Title",
+      "type": "text",
+      "required": true,
+      "maxLength": 80
+    },
+    {
+      "key": "description",
+      "label": "Project Description",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 220
+    },
+    {
+      "key": "url",
+      "label": "Project URL",
+      "type": "url",
+      "required": false,
+      "defaultValue": "#",
+      "pattern": "^(#|https?:\\/\\/.+)$"
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>itemFields</span>
+                <span>itemLabelField</span>
+                <span>addButtonLabel</span>
+                <span>minItems</span>
+                <span>maxItems</span>
+                <span>defaultValue array of objects</span>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="section-title">
+                <span>05</span>
+                <div>
+                    <h2>Feature Blocks</h2>
+                    <p>Use feature blocks for built-in interactions like messages, feelings, RSVP, votes, or forms.</p>
+                </div>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML feature block</span>
+                        <button data-copy="feature-html">Copy</button>
+                    </div>
+                    <pre><code id="feature-html">&lt;section data-section="messages" data-feature="feelings"&gt;
+
+    &lt;input type="text" placeholder="Your name" data-feeling-name /&gt;
+
+    &lt;textarea placeholder="Write message" data-feeling-message&gt;&lt;/textarea&gt;
+
+    &lt;button type="button" data-send-feeling&gt;
+        Send
+    &lt;/button&gt;
+
+    &lt;p data-feeling-result&gt;&lt;/p&gt;
+
+    &lt;div data-feelings-list&gt;&lt;/div&gt;
+
+&lt;/section&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json features</span>
+                        <button data-copy="feature-json">Copy</button>
+                    </div>
+                    <pre><code id="feature-json">{
+  "features": {
+    "feelings": {
+      "enabled": true,
+      "approvalMode": "manual",
+      "preventDuplicate": true,
+      "rateLimitMinutes": 5,
+      "maxNameLength": 60,
+      "maxMessageLength": 220,
+      "title": "Messages",
+      "description": "Visitors can write messages"
+    },
+    "rsvp": {
+      "enabled": true,
+      "preventDuplicate": true,
+      "maxNameLength": 60,
+      "title": "Visitor Response",
+      "description": "Visitors can choose a response"
+    }
+  }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="sections">
+            <div class="section-title">
+                <span>06</span>
+                <div>
+                    <h2>Sections</h2>
+                    <p>Sections are used by your builder to select, hide, move, resize, and style parts of the template.
+                    </p>
+                </div>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML section</span>
+                        <button data-copy="section-html">Copy</button>
+                    </div>
+                    <pre><code id="section-html">&lt;section class="hero" data-section="hero"&gt;
+    &lt;h1 data-section="heroTitle"&gt;&#123;&#123;heroTitle&#125;&#125;&lt;/h1&gt;
+    &lt;p data-section="heroDescription"&gt;&#123;&#123;heroDescription&#125;&#125;&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json section</span>
+                        <button data-copy="section-json">Copy</button>
+                    </div>
+                    <pre><code id="section-json">{
+  "key": "heroTitle",
+  "label": "Hero Title",
+  "selector": "[data-section='heroTitle']",
+  "type": "text",
+  "editable": true,
+  "visible": true,
+  "movable": true,
+  "resizable": false,
+  "styleControls": [
+    "fontSize",
+    "fontWeight",
+    "color",
+    "textAlign",
+    "lineHeight",
+    "margin"
+  ]
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="full-template-json">
+            <div class="section-title">
+                <span>07</span>
+                <div>
+                    <h2>Full template.json Starter</h2>
+                    <p>This is a starter object you can copy when building a new Safhat template.</p>
+                </div>
+            </div>
+
+            <div class="code-card large">
+                <div class="code-header">
+                    <span>template.json starter</span>
+                    <button data-copy="full-json">Copy</button>
+                </div>
+                <pre><code id="full-json">{
+  "id": "new-template-id",
+  "name": "Template Name",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "description": "Template description",
+  "type": "invite | congratulation | web | resume | card | framework",
+  "category": "category-id",
+  "language": "ar",
+  "direction": "rtl",
+  "html": "index.html",
+  "css": "style.css",
+  "thumbnail": "thumbnail.png",
+  "previewImage": "preview.png",
+  "tags": [
+    "tag-1",
+    "tag-2"
+  ],
+  "status": "active",
+  "isPremium": false,
+  "exportSettings": {
+    "width": 1080,
+    "height": 1920,
+    "durationSeconds": 8,
+    "fps": 30,
+    "safeArea": {
+      "top": 80,
+      "right": 60,
+      "bottom": 80,
+      "left": 60
+    }
+  },
+  "features": {
+    "feelings": {
+      "enabled": false,
+      "approvalMode": "manual",
+      "preventDuplicate": true,
+      "rateLimitMinutes": 5,
+      "maxNameLength": 60,
+      "maxMessageLength": 220,
+      "title": "Messages",
+      "description": "Visitors can write messages"
+    },
+    "rsvp": {
+      "enabled": false,
+      "preventDuplicate": true,
+      "maxNameLength": 60,
+      "title": "Visitor Response",
+      "description": "Visitors can choose a response"
+    }
+  },
+  "fields": [
+    {
+      "key": "title",
+      "label": "Title",
+      "type": "text",
+      "formTab": "content",
+      "group": "main",
+      "order": 1,
+      "width": "full",
+      "required": true,
+      "defaultValue": "Template Title",
+      "placeholder": "Write title",
+      "minLength": 3,
+      "maxLength": 80,
+      "trim": true,
+      "sanitize": true
+    },
+    {
+      "key": "description",
+      "label": "Description",
+      "type": "textarea",
+      "formTab": "content",
+      "group": "main",
+      "order": 2,
+      "width": "full",
+      "required": true,
+      "defaultValue": "Template description",
+      "placeholder": "Write description",
+      "rows": 4,
+      "minLength": 10,
+      "maxLength": 300,
+      "trim": true,
+      "sanitize": true
+    },
+    {
+      "key": "showHeroImage",
+      "label": "Show Hero Image",
+      "type": "select",
+      "formTab": "media",
+      "group": "hero",
+      "order": 3,
+      "width": "half",
+      "required": true,
+      "defaultValue": "yes",
+      "options": [
+        {
+          "label": "Yes",
+          "value": "yes"
+        },
+        {
+          "label": "No",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "key": "heroImage",
+      "label": "Hero Image",
+      "type": "image",
+      "formTab": "media",
+      "group": "hero",
+      "order": 4,
+      "width": "full",
+      "requiredWhen": {
+        "field": "showHeroImage",
+        "equals": "yes"
+      },
+      "visibleWhen": {
+        "field": "showHeroImage",
+        "equals": "yes"
+      },
+      "defaultValue": "https://placehold.co/900x600/eef2ff/2563eb?text=Hero+Image",
+      "accept": [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+      ],
+      "maxSizeMb": 5,
+      "minWidth": 600,
+      "minHeight": 400,
+      "aspectRatio": "3:2",
+      "crop": true
+    },
+    {
+      "key": "primaryColor",
+      "label": "Primary Color",
+      "type": "color",
+      "formTab": "design",
+      "group": "colors",
+      "order": 5,
+      "width": "third",
+      "required": true,
+      "defaultValue": "#2563eb"
+    },
+    {
+      "key": "items",
+      "label": "Items",
+      "type": "repeater",
+      "formTab": "content",
+      "group": "items",
+      "order": 6,
+      "width": "full",
+      "required": true,
+      "minItems": 1,
+      "maxItems": 6,
+      "itemLabelField": "title",
+      "addButtonLabel": "Add Item",
+      "defaultValue": [
+        {
+          "title": "Item title",
+          "description": "Item description",
+          "url": "#"
+        }
+      ],
+      "itemFields": [
+        {
+          "key": "title",
+          "label": "Title",
+          "type": "text",
+          "required": true,
+          "maxLength": 80
+        },
+        {
+          "key": "description",
+          "label": "Description",
+          "type": "textarea",
+          "required": true,
+          "maxLength": 220
+        },
+        {
+          "key": "url",
+          "label": "URL",
+          "type": "url",
+          "required": false,
+          "defaultValue": "#",
+          "pattern": "^(#|https?:\\/\\/.+)$"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "key": "title",
+      "label": "Title",
+      "selector": "[data-section='title']",
+      "type": "text",
+      "editable": true,
+      "visible": true,
+      "movable": true,
+      "resizable": false,
+      "styleControls": [
+        "fontSize",
+        "fontWeight",
+        "color",
+        "textAlign",
+        "lineHeight",
+        "margin"
+      ]
+    },
+    {
+      "key": "heroImage",
+      "label": "Hero Image",
+      "selector": "[data-section='heroImage']",
+      "type": "image",
+      "editable": true,
+      "visible": true,
+      "movable": true,
+      "resizable": true,
+      "visibleWhen": {
+        "field": "showHeroImage",
+        "equals": "yes"
+      },
+      "styleControls": [
+        "width",
+        "height",
+        "borderRadius",
+        "objectFit",
+        "objectPosition",
+        "margin",
+        "padding"
+      ]
+    }
+  ]
+}</code></pre>
+            </div>
         </section>
 
     </main>
+
+    <script>
+        const buttons = document.querySelectorAll("[data-copy]");
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", async () => {
+                const targetId = button.getAttribute("data-copy");
+                const target = document.getElementById(targetId);
+
+                if (!target) return;
+
+                const text = target.innerText;
+
+                try {
+                    await navigator.clipboard.writeText(text);
+                    const oldText = button.innerText;
+                    button.innerText = "Copied";
+                    button.classList.add("copied");
+
+                    setTimeout(() => {
+                        button.innerText = oldText;
+                        button.classList.remove("copied");
+                    }, 1200);
+                } catch {
+                    button.innerText = "Copy failed";
+                    setTimeout(() => {
+                        button.innerText = "Copy";
+                    }, 1200);
+                }
+            });
+        });
+    </script>
 
 </body>
 

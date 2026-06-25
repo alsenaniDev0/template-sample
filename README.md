@@ -10,11 +10,12 @@ You can:
 
 1. Select fields from all supported field types.
 2. Expand/collapse selected field accordions to edit labels, keys, defaults, validation limits, tabs, groups, and order. New fields default mostly to `data` for content and `design` for visual controls.
-3. Remove individual added fields or clear all fields.
-4. Add `visibleWhen` and `requiredWhen` show/hide rules.
-5. Toggle platform features like RSVP, messages, countdown, gallery, map, and music.
-6. Copy the live JSON preview directly into `template.json`.
-7. Paste an existing `template.json`, import it, update it in the UI, then copy the new version.
+3. Add custom regex validation with `pattern` and `patternMessage`, or use quick presets for URL, numbers-only, Arabic-only, and English-only.
+4. Remove individual added fields or clear all fields.
+5. Add `visibleWhen` and `requiredWhen` show/hide rules.
+6. Toggle platform features like RSVP, messages, countdown, gallery, map, and music.
+7. Copy the live JSON preview directly into `template.json`.
+8. Paste an existing `template.json`, import it, update it in the UI, then copy the new version.
 
 ## Create a template
 

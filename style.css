@@ -765,6 +765,7 @@ code {
 }
 
 .condition-editor,
+.validation-editor,
 .design-controls-editor {
     margin-top: 14px;
     border-radius: 16px;
@@ -773,6 +774,7 @@ code {
 }
 
 .condition-editor summary,
+.validation-editor summary,
 .design-controls-editor summary {
     cursor: pointer;
     padding: 13px 14px;
@@ -781,6 +783,7 @@ code {
 }
 
 .condition-grid,
+.validation-grid,
 .design-controls-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -788,6 +791,7 @@ code {
     padding: 0 14px 14px;
 }
 
+.validation-grid label,
 .design-controls-grid label {
     display: grid;
     gap: 7px;
@@ -796,10 +800,12 @@ code {
     font-weight: 900;
 }
 
+.validation-grid span,
 .design-controls-grid span {
     color: var(--muted);
 }
 
+.validation-grid input,
 .design-controls-grid input {
     width: 100%;
     border: 1px solid var(--border);
@@ -811,6 +817,27 @@ code {
     font: inherit;
     font-size: 13px;
     font-weight: 700;
+}
+
+.validation-grid label.wide {
+    grid-column: 1 / -1;
+}
+
+.pattern-presets {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 9px;
+}
+
+.pattern-presets>div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pattern-presets button {
+    color: var(--primary);
+    background: var(--primary-soft);
 }
 
 .condition-helper {
@@ -1401,6 +1428,7 @@ td code {
     .field-picker,
     .feature-toggle-grid,
     .condition-grid,
+    .validation-grid,
     .design-controls-grid {
         grid-template-columns: 1fr;
     }

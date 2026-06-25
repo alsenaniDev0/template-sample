@@ -346,6 +346,12 @@
                 </article>
 
                 <article class="mini-card">
+                    <h3>Regex validation</h3>
+                    <p>Use custom patterns for URLs, numbers-only, Arabic-only, or any platform rule.</p>
+                    <code>pattern / patternMessage</code>
+                </article>
+
+                <article class="mini-card">
                     <h3>Number validation</h3>
                     <p>Use for age, price, count, percentage.</p>
                     <code>min / max / step</code>
@@ -386,6 +392,20 @@
     "maxLength": "Username must not exceed 30 characters",
     "pattern": "Username format is invalid"
   }
+}</code></pre>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>URL-only Arabic message example</span>
+                    <button data-copy="url-pattern-example">Copy</button>
+                </div>
+                <pre><code id="url-pattern-example">{
+  "key": "websiteUrl",
+  "label": "رابط الموقع",
+  "type": "url",
+  "patternMessage": "الرابط يجب أن يبدأ بـ http أو https",
+  "pattern": "^https?:\\/\\/.+"
 }</code></pre>
             </div>
         </section>

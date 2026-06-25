@@ -315,6 +315,32 @@ const FEATURE_BLUEPRINTS = [
 const OPTION_TYPES = new Set(["select", "radio", "font", "icon"]);
 const ARRAY_DEFAULT_TYPES = new Set(["list", "names"]);
 const FORM_TABS = ["data", "design", "features", "settings", "media", "content"];
+const PATTERN_PRESETS = [
+    {
+        key: "url",
+        label: "URL http/https",
+        pattern: "^https?:\\/\\/.+",
+        message: "الرابط يجب أن يبدأ بـ http أو https"
+    },
+    {
+        key: "numbers",
+        label: "Numbers only",
+        pattern: "^\\d+$",
+        message: "هذا الحقل يقبل أرقام فقط"
+    },
+    {
+        key: "arabic",
+        label: "Arabic letters",
+        pattern: "^[\\u0600-\\u06FF\\s]+$",
+        message: "هذا الحقل يقبل حروف عربية فقط"
+    },
+    {
+        key: "english",
+        label: "English letters",
+        pattern: "^[A-Za-z\\s]+$",
+        message: "هذا الحقل يقبل حروف إنجليزية فقط"
+    }
+];
 
 const state = {
     fields: [],
@@ -570,12 +596,14 @@ function renderFields() {
         const isNames = field.type === "names";
         const isOpen = state.openFieldId === field._id;
         const hasFontDesignControl = fieldHasFontDesignControl(field);
+        const hasPatternValidation = Boolean(field.pattern || field.patternMessage);
         const defaultLabel = ARRAY_DEFAULT_TYPES.has(field.type) || isRepeater ? "Default value JSON / comma list" : "Default value";
         const summaryParts = [
             field.key ? `key: ${field.key}` : "",
             field.formTab ? `tab: ${field.formTab}` : "",
             field.group ? `group: ${field.group}` : "",
             field.required ? "required" : "optional",
+            hasPatternValidation ? "regex" : "",
             hasFontDesignControl ? "font design" : "",
             hasVisibleWhen || hasRequiredWhen ? "has rules" : ""
         ].filter(Boolean);
@@ -695,6 +723,29 @@ function renderFields() {
                         </label>
                     ` : ""}
                 </div>
+
+                <details class="validation-editor" ${hasPatternValidation ? "open" : ""}>
+                    <summary>Validation pattern</summary>
+                    <div class="validation-grid">
+                        <label class="wide">
+                            <span>Regex pattern</span>
+                            <input data-field-prop="pattern" value="${escapeAttribute(field.pattern || "")}" placeholder="^https?:\\/\\/.+">
+                        </label>
+                        <label class="wide">
+                            <span>Pattern message</span>
+                            <input data-field-prop="patternMessage" value="${escapeAttribute(field.patternMessage || "")}" placeholder="الرابط يجب أن يبدأ بـ http أو https">
+                        </label>
+                        <div class="pattern-presets">
+                            <span>Quick presets</span>
+                            <div>
+                                ${PATTERN_PRESETS.map((preset) => `
+                                    <button type="button" data-pattern-preset="${preset.key}">${preset.label}</button>
+                                `).join("")}
+                                <button class="ghost-button" type="button" data-pattern-clear>Clear pattern</button>
+                            </div>
+                        </div>
+                    </div>
+                </details>
 
                 <details class="design-controls-editor" ${hasFontDesignControl ? "open" : ""}>
                     <summary>Design controls</summary>
@@ -970,6 +1021,31 @@ function updateDesignControlToggle(input) {
         }
     }
 
+    renderFields();
+    updateOutput();
+}
+
+function applyPatternPreset(button) {
+    const editor = button.closest("[data-field-id]");
+    const field = state.fields.find((item) => item._id === Number(editor?.dataset.fieldId));
+    if (!field) return;
+
+    const preset = PATTERN_PRESETS.find((item) => item.key === button.dataset.patternPreset);
+    if (!preset) return;
+
+    field.pattern = preset.pattern;
+    field.patternMessage = preset.message;
+    renderFields();
+    updateOutput();
+}
+
+function clearPatternValidation(button) {
+    const editor = button.closest("[data-field-id]");
+    const field = state.fields.find((item) => item._id === Number(editor?.dataset.fieldId));
+    if (!field) return;
+
+    delete field.pattern;
+    delete field.patternMessage;
     renderFields();
     updateOutput();
 }
@@ -1264,6 +1340,12 @@ function bindBuilder() {
 
         const fieldActionButton = event.target.closest("[data-field-action]");
         if (fieldActionButton) handleFieldAction(fieldActionButton);
+
+        const patternPresetButton = event.target.closest("[data-pattern-preset]");
+        if (patternPresetButton) applyPatternPreset(patternPresetButton);
+
+        const patternClearButton = event.target.closest("[data-pattern-clear]");
+        if (patternClearButton) clearPatternValidation(patternClearButton);
 
         const importButton = event.target.closest("[data-import-json]");
         if (importButton) {

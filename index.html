@@ -42,6 +42,7 @@
             <a href="#date">Date</a>
             <a href="#time">Time</a>
             <a href="#list">List</a>
+            <a href="#names">Names</a>
             <a href="#repeater">Repeater</a>
             <a href="#features">Features</a>
             <a href="#sections">Sections</a>
@@ -257,7 +258,7 @@
                         <tr>
                             <td><code>formTab</code></td>
                             <td>string</td>
-                            <td>Groups fields into tabs: content, design, media, features, settings.</td>
+                            <td>Groups fields into tabs. Current builder defaults are <code>data</code> and <code>design</code>.</td>
                         </tr>
                         <tr>
                             <td><code>group</code></td>
@@ -285,6 +286,11 @@
                             <td>Makes the field required only when a condition is true.</td>
                         </tr>
                         <tr>
+                            <td><code>designControls</code></td>
+                            <td>object</td>
+                            <td>Attach design controls directly to a field, such as <code>designControls.font</code> with a CSS selector.</td>
+                        </tr>
+                        <tr>
                             <td><code>validationMessages</code></td>
                             <td>object</td>
                             <td>Custom error messages for validation.</td>
@@ -302,7 +308,7 @@
   "key": "title",
   "label": "Title",
   "type": "text",
-  "formTab": "content",
+  "formTab": "data",
   "group": "main",
   "order": 1,
   "width": "full",
@@ -721,7 +727,7 @@
             <div class="field-header">
                 <span class="field-type">font</span>
                 <h2>Font Field</h2>
-                <p>Use to let the user choose one font for the whole template or for specific sections.</p>
+                <p>Use a standalone font field for global template fonts. For field-specific font editing, use the newer <code>designControls.font</code> object directly inside the field.</p>
             </div>
 
             <div class="code-grid">
@@ -730,11 +736,9 @@
                         <span>HTML</span>
                         <button data-copy="font-html">Copy</button>
                     </div>
-                    <pre><code id="font-html">&lt;body style="--fontFamily: &#123;&#123;fontFamily&#125;&#125;;"&gt;
-
-&lt;main class="template"&gt;
-    ...
-&lt;/main&gt;</code></pre>
+                    <pre><code id="font-html">&lt;h1 class="hero-names"&gt;
+    &#123;&#123;#each names&#125;&#125;&#123;&#123;this&#125;&#125;&#123;&#123;/each&#125;&#125;
+&lt;/h1&gt;</code></pre>
                 </div>
 
                 <div class="code-card">
@@ -743,34 +747,32 @@
                         <button data-copy="font-json">Copy</button>
                     </div>
                     <pre><code id="font-json">{
-  "key": "fontFamily",
-  "label": "Font Family",
-  "type": "font",
-  "formTab": "design",
+  "key": "names",
+  "label": "أسماء العروسين",
+  "type": "names",
+  "placeholder": "مثال: محمد",
+  "minItems": 2,
   "required": true,
-  "defaultValue": "Cairo",
-  "options": [
-    {
-      "label": "Cairo",
-      "value": "Cairo",
-      "url": "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&display=swap"
-    },
-    {
-      "label": "Tajawal",
-      "value": "Tajawal",
-      "url": "https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+  "separator": " و ",
+  "maxItems": 2,
+  "formTab": "data",
+  "designControls": {
+    "font": {
+      "enabled": true,
+      "label": "خط أسماء العروسين",
+      "selector": ".hero-names"
     }
-  ]
+  }
 }</code></pre>
                 </div>
             </div>
 
             <div class="supports">
                 <strong>Supports:</strong>
-                <span>options</span>
-                <span>url</span>
-                <span>defaultValue</span>
-                <span>formTab: design</span>
+                <span>designControls.font.enabled</span>
+                <span>designControls.font.label</span>
+                <span>designControls.font.selector</span>
+                <span>formTab: data</span>
             </div>
         </section>
 
@@ -873,7 +875,7 @@
   "key": "heroImage",
   "label": "Hero Image",
   "type": "image",
-  "formTab": "media",
+  "formTab": "design",
   "group": "hero",
   "required": true,
   "defaultValue": "https://placehold.co/900x600/eef2ff/2563eb?text=Hero+Image",
@@ -1052,7 +1054,7 @@
   "key": "soundUrl",
   "label": "YouTube Sound URL",
   "type": "youtube",
-  "formTab": "media",
+  "formTab": "data",
   "required": false,
   "placeholder": "https://youtu.be/...",
   "hint": "Add a YouTube link to play as background sound",
@@ -1177,7 +1179,7 @@
   "key": "skills",
   "label": "Skills",
   "type": "list",
-  "formTab": "content",
+  "formTab": "data",
   "required": true,
   "listStyle": "tags",
   "itemType": "text",
@@ -1209,6 +1211,65 @@
                 <span>maxItems</span>
                 <span>uniqueItems</span>
                 <span>defaultValue array</span>
+            </div>
+        </section>
+
+        <section class="field-doc important" id="names">
+            <div class="field-header">
+                <span class="field-type">names</span>
+                <h2>Names Field</h2>
+                <p>Use for bride/groom names, invitee names, family names, or any small list of names that may need a separator and field-specific font control.</p>
+            </div>
+
+            <div class="example-preview">
+                <label>Preview</label>
+                <input type="text" value="محمد و سارة" readonly />
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>HTML</span>
+                        <button data-copy="names-html">Copy</button>
+                    </div>
+                    <pre><code id="names-html">&lt;h1 class="hero-names" data-section="names"&gt;
+    &#123;&#123;#each names&#125;&#125;&#123;&#123;this&#125;&#125;&#123;&#123;/each&#125;&#125;
+&lt;/h1&gt;</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>template.json</span>
+                        <button data-copy="names-json">Copy</button>
+                    </div>
+                    <pre><code id="names-json">{
+  "key": "names",
+  "label": "أسماء العروسين",
+  "type": "names",
+  "placeholder": "مثال: محمد",
+  "minItems": 2,
+  "required": true,
+  "separator": " و ",
+  "maxItems": 2,
+  "formTab": "data",
+  "designControls": {
+    "font": {
+      "enabled": true,
+      "label": "خط أسماء العروسين",
+      "selector": ".hero-names"
+    }
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="supports">
+                <strong>Supports:</strong>
+                <span>minItems</span>
+                <span>maxItems</span>
+                <span>separator</span>
+                <span>placeholder</span>
+                <span>designControls.font</span>
             </div>
         </section>
 
@@ -1262,7 +1323,7 @@
   "key": "projects",
   "label": "Projects",
   "type": "repeater",
-  "formTab": "content",
+  "formTab": "data",
   "required": true,
   "minItems": 1,
   "maxItems": 6,
@@ -1495,7 +1556,7 @@
       "key": "title",
       "label": "Title",
       "type": "text",
-      "formTab": "content",
+      "formTab": "data",
       "group": "main",
       "order": 1,
       "width": "full",
@@ -1511,7 +1572,7 @@
       "key": "description",
       "label": "Description",
       "type": "textarea",
-      "formTab": "content",
+      "formTab": "data",
       "group": "main",
       "order": 2,
       "width": "full",
@@ -1528,7 +1589,7 @@
       "key": "showHeroImage",
       "label": "Show Hero Image",
       "type": "select",
-      "formTab": "media",
+      "formTab": "design",
       "group": "hero",
       "order": 3,
       "width": "half",
@@ -1549,7 +1610,7 @@
       "key": "heroImage",
       "label": "Hero Image",
       "type": "image",
-      "formTab": "media",
+      "formTab": "design",
       "group": "hero",
       "order": 4,
       "width": "full",
@@ -1585,12 +1646,33 @@
       "defaultValue": "#2563eb"
     },
     {
+      "key": "names",
+      "label": "أسماء العروسين",
+      "type": "names",
+      "formTab": "data",
+      "group": "people",
+      "order": 6,
+      "width": "full",
+      "placeholder": "مثال: محمد",
+      "minItems": 2,
+      "required": true,
+      "separator": " و ",
+      "maxItems": 2,
+      "designControls": {
+        "font": {
+          "enabled": true,
+          "label": "خط أسماء العروسين",
+          "selector": ".hero-names"
+        }
+      }
+    },
+    {
       "key": "items",
       "label": "Items",
       "type": "repeater",
-      "formTab": "content",
+      "formTab": "data",
       "group": "items",
-      "order": 6,
+      "order": 7,
       "width": "full",
       "required": true,
       "minItems": 1,

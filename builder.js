@@ -13,7 +13,7 @@ const FIELD_BLUEPRINTS = [
             maxLength: 80,
             trim: true,
             sanitize: true,
-            formTab: "content",
+            formTab: "data",
             group: "main",
             width: "full"
         }
@@ -33,7 +33,7 @@ const FIELD_BLUEPRINTS = [
             maxLength: 300,
             trim: true,
             sanitize: true,
-            formTab: "content",
+            formTab: "data",
             group: "main",
             width: "full"
         }
@@ -71,7 +71,7 @@ const FIELD_BLUEPRINTS = [
                 { label: "شركة", value: "company" },
                 { label: "مناسبة", value: "event" }
             ],
-            formTab: "settings",
+            formTab: "data",
             group: "mode",
             width: "full"
         }
@@ -139,7 +139,7 @@ const FIELD_BLUEPRINTS = [
             defaultValue: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
             accept: "image/*",
             maxSizeMb: 5,
-            formTab: "media",
+            formTab: "design",
             group: "images",
             width: "full"
         }
@@ -155,7 +155,7 @@ const FIELD_BLUEPRINTS = [
             defaultValue: "#",
             placeholder: "https://example.com",
             pattern: "^(#|https?:\\/\\/.+)$",
-            formTab: "content",
+            formTab: "data",
             group: "actions",
             width: "full"
         }
@@ -171,7 +171,7 @@ const FIELD_BLUEPRINTS = [
             defaultValue: "Riyadh, Saudi Arabia",
             placeholder: "اكتب الموقع",
             hint: "Use {{location}} for the name and {{locationUrl}} for the clickable map link.",
-            formTab: "content",
+            formTab: "data",
             group: "location",
             width: "full"
         }
@@ -186,7 +186,7 @@ const FIELD_BLUEPRINTS = [
             required: false,
             defaultValue: "",
             placeholder: "https://youtube.com/watch?v=...",
-            formTab: "media",
+            formTab: "data",
             group: "video",
             width: "full"
         }
@@ -200,7 +200,7 @@ const FIELD_BLUEPRINTS = [
             label: "تاريخ المناسبة",
             required: false,
             defaultValue: "2026-12-31",
-            formTab: "content",
+            formTab: "data",
             group: "date-time",
             width: "half"
         }
@@ -214,7 +214,7 @@ const FIELD_BLUEPRINTS = [
             label: "وقت المناسبة",
             required: false,
             defaultValue: "20:00",
-            formTab: "content",
+            formTab: "data",
             group: "date-time",
             width: "half"
         }
@@ -230,7 +230,7 @@ const FIELD_BLUEPRINTS = [
             defaultValue: ["تصميم جميل", "سهل التعديل", "متجاوب"],
             minItems: 1,
             maxItems: 6,
-            formTab: "content",
+            formTab: "data",
             group: "lists",
             width: "full"
         }
@@ -241,14 +241,22 @@ const FIELD_BLUEPRINTS = [
         description: "People names and invitees.",
         defaults: {
             key: "names",
-            label: "الأسماء",
-            required: false,
-            defaultValue: ["الاسم الأول", "الاسم الثاني"],
-            minItems: 1,
-            maxItems: 8,
-            formTab: "content",
+            label: "أسماء العروسين",
+            required: true,
+            placeholder: "مثال: محمد",
+            minItems: 2,
+            maxItems: 2,
+            separator: " و ",
+            formTab: "data",
             group: "people",
-            width: "full"
+            width: "full",
+            designControls: {
+                font: {
+                    enabled: true,
+                    label: "خط أسماء العروسين",
+                    selector: ".hero-names"
+                }
+            }
         }
     },
     {
@@ -285,7 +293,7 @@ const FIELD_BLUEPRINTS = [
                     maxLength: 220
                 }
             ],
-            formTab: "content",
+            formTab: "data",
             group: "repeaters",
             width: "full"
         }
@@ -306,6 +314,7 @@ const FEATURE_BLUEPRINTS = [
 
 const OPTION_TYPES = new Set(["select", "radio", "font", "icon"]);
 const ARRAY_DEFAULT_TYPES = new Set(["list", "names"]);
+const FORM_TABS = ["data", "design", "features", "settings", "media", "content"];
 
 const state = {
     fields: [],
@@ -535,6 +544,10 @@ function parseOptions(text) {
         });
 }
 
+function fieldHasFontDesignControl(field) {
+    return Boolean(field.designControls?.font?.enabled);
+}
+
 function renderFields() {
     const target = $("[data-selected-fields]");
     if (!target) return;
@@ -554,13 +567,16 @@ function renderFields() {
         const hasRequiredWhen = Boolean(field.requiredWhen);
         const hasOptions = OPTION_TYPES.has(field.type);
         const isRepeater = field.type === "repeater";
+        const isNames = field.type === "names";
         const isOpen = state.openFieldId === field._id;
+        const hasFontDesignControl = fieldHasFontDesignControl(field);
         const defaultLabel = ARRAY_DEFAULT_TYPES.has(field.type) || isRepeater ? "Default value JSON / comma list" : "Default value";
         const summaryParts = [
             field.key ? `key: ${field.key}` : "",
             field.formTab ? `tab: ${field.formTab}` : "",
             field.group ? `group: ${field.group}` : "",
             field.required ? "required" : "optional",
+            hasFontDesignControl ? "font design" : "",
             hasVisibleWhen || hasRequiredWhen ? "has rules" : ""
         ].filter(Boolean);
 
@@ -599,7 +615,10 @@ function renderFields() {
                     </label>
                     <label>
                         <span>Tab</span>
-                        <input data-field-prop="formTab" value="${escapeAttribute(field.formTab || "")}" placeholder="content">
+                        <select data-field-prop="formTab">
+                            ${field.formTab && !FORM_TABS.includes(field.formTab) ? `<option value="${escapeAttribute(field.formTab)}" selected>${escapeHtml(field.formTab)}</option>` : ""}
+                            ${FORM_TABS.map((tab) => `<option value="${tab}" ${field.formTab === tab ? "selected" : ""}>${tab}</option>`).join("")}
+                        </select>
                     </label>
                     <label>
                         <span>Group</span>
@@ -635,6 +654,12 @@ function renderFields() {
                         <span>Max length/items</span>
                         <input data-field-prop="max" type="number" value="${escapeAttribute(field.maxLength ?? field.maxItems ?? "")}">
                     </label>
+                    ${isNames ? `
+                        <label>
+                            <span>Separator</span>
+                            <input data-field-prop="separator" value="${escapeAttribute(field.separator || "")}" placeholder=" و ">
+                        </label>
+                    ` : ""}
                     <label class="check-row">
                         <input data-field-prop="required" type="checkbox" ${field.required ? "checked" : ""}>
                         <span>Required</span>
@@ -670,6 +695,24 @@ function renderFields() {
                         </label>
                     ` : ""}
                 </div>
+
+                <details class="design-controls-editor" ${hasFontDesignControl ? "open" : ""}>
+                    <summary>Design controls</summary>
+                    <div class="design-controls-grid">
+                        <label class="check-row">
+                            <input data-design-control-toggle="font" type="checkbox" ${hasFontDesignControl ? "checked" : ""}>
+                            <span>Enable font control for this field</span>
+                        </label>
+                        <label>
+                            <span>Font control label</span>
+                            <input data-design-control-prop="font.label" value="${escapeAttribute(field.designControls?.font?.label || `خط ${field.label || field.key || "الحقل"}`)}" placeholder="خط أسماء العروسين">
+                        </label>
+                        <label>
+                            <span>CSS selector</span>
+                            <input data-design-control-prop="font.selector" value="${escapeAttribute(field.designControls?.font?.selector || "")}" placeholder=".hero-names">
+                        </label>
+                    </div>
+                </details>
 
                 <details class="condition-editor" ${hasVisibleWhen || hasRequiredWhen ? "open" : ""}>
                     <summary>Show / hide and required rules</summary>
@@ -850,6 +893,7 @@ function updateFieldFromInput(input) {
 
     const prop = input.dataset.fieldProp;
     const conditionProp = input.dataset.conditionProp;
+    const designControlProp = input.dataset.designControlProp;
 
     if (prop) {
         if (prop === "required" || prop === "sanitize" || prop === "trim") {
@@ -890,6 +934,43 @@ function updateFieldFromInput(input) {
         if (conditionKey === "field") input.value = value;
     }
 
+    if (designControlProp) {
+        const [controlName, controlKey] = designControlProp.split(".");
+        field.designControls = field.designControls || {};
+        field.designControls[controlName] = field.designControls[controlName] || { enabled: true };
+        field.designControls[controlName].enabled = true;
+        field.designControls[controlName][controlKey] = input.value;
+
+        const toggle = editor.querySelector(`[data-design-control-toggle="${controlName}"]`);
+        if (toggle) toggle.checked = true;
+    }
+
+    updateOutput();
+}
+
+function updateDesignControlToggle(input) {
+    const editor = input.closest("[data-field-id]");
+    const field = state.fields.find((item) => item._id === Number(editor?.dataset.fieldId));
+    if (!field) return;
+
+    const controlName = input.dataset.designControlToggle;
+
+    if (input.checked) {
+        field.designControls = field.designControls || {};
+        field.designControls[controlName] = {
+            enabled: true,
+            label: field.designControls?.[controlName]?.label || `خط ${field.label || field.key || "الحقل"}`,
+            selector: field.designControls?.[controlName]?.selector || ""
+        };
+    } else if (field.designControls?.[controlName]) {
+        delete field.designControls[controlName];
+
+        if (!Object.keys(field.designControls).length) {
+            delete field.designControls;
+        }
+    }
+
+    renderFields();
     updateOutput();
 }
 
@@ -1053,9 +1134,29 @@ function demoTemplate() {
                 required: true,
                 defaultValue: "ندعوكم لحضور مناسبتنا",
                 maxLength: 80,
-                formTab: "content",
+                formTab: "data",
                 group: "main",
                 order: 1
+            },
+            {
+                key: "names",
+                label: "أسماء العروسين",
+                type: "names",
+                placeholder: "مثال: محمد",
+                minItems: 2,
+                required: true,
+                separator: " و ",
+                maxItems: 2,
+                formTab: "data",
+                group: "people",
+                order: 2,
+                designControls: {
+                    font: {
+                        enabled: true,
+                        label: "خط أسماء العروسين",
+                        selector: ".hero-names"
+                    }
+                }
             },
             {
                 key: "showHeroImage",
@@ -1066,9 +1167,9 @@ function demoTemplate() {
                     { label: "نعم", value: "yes" },
                     { label: "لا", value: "no" }
                 ],
-                formTab: "media",
+                formTab: "design",
                 group: "images",
-                order: 2
+                order: 3
             },
             {
                 key: "heroImage",
@@ -1078,9 +1179,9 @@ function demoTemplate() {
                     field: "showHeroImage",
                     equals: "yes"
                 },
-                formTab: "media",
+                formTab: "design",
                 group: "images",
-                order: 3
+                order: 4
             }
         ],
         features: {
@@ -1184,16 +1285,19 @@ function bindBuilder() {
     });
 
     document.addEventListener("input", (event) => {
-        const fieldInput = event.target.closest("[data-field-prop], [data-condition-prop]");
+        const fieldInput = event.target.closest("[data-field-prop], [data-condition-prop], [data-design-control-prop]");
         if (fieldInput) updateFieldFromInput(fieldInput);
     });
 
     document.addEventListener("change", (event) => {
-        const fieldInput = event.target.closest("[data-field-prop], [data-condition-prop]");
+        const fieldInput = event.target.closest("[data-field-prop], [data-condition-prop], [data-design-control-prop]");
         if (fieldInput) {
             updateFieldFromInput(fieldInput);
             ensureControllerFromConditionInput(fieldInput);
         }
+
+        const designControlToggle = event.target.closest("[data-design-control-toggle]");
+        if (designControlToggle) updateDesignControlToggle(designControlToggle);
 
         const conditionToggle = event.target.closest("[data-condition-toggle]");
         if (conditionToggle) updateConditionToggle(conditionToggle);

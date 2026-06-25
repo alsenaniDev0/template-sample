@@ -764,25 +764,53 @@ code {
     border-top: 1px solid var(--border);
 }
 
-.condition-editor {
+.condition-editor,
+.design-controls-editor {
     margin-top: 14px;
     border-radius: 16px;
     background: #ffffff;
     border: 1px solid var(--border);
 }
 
-.condition-editor summary {
+.condition-editor summary,
+.design-controls-editor summary {
     cursor: pointer;
     padding: 13px 14px;
     color: var(--primary);
     font-weight: 900;
 }
 
-.condition-grid {
+.condition-grid,
+.design-controls-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
     padding: 0 14px 14px;
+}
+
+.design-controls-grid label {
+    display: grid;
+    gap: 7px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.design-controls-grid span {
+    color: var(--muted);
+}
+
+.design-controls-grid input {
+    width: 100%;
+    border: 1px solid var(--border);
+    outline: 0;
+    padding: 11px 12px;
+    border-radius: 13px;
+    color: var(--text);
+    background: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 .condition-helper {
@@ -1372,7 +1400,8 @@ td code {
     .builder-form-grid.compact,
     .field-picker,
     .feature-toggle-grid,
-    .condition-grid {
+    .condition-grid,
+    .design-controls-grid {
         grid-template-columns: 1fr;
     }
 

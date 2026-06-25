@@ -9,7 +9,7 @@ Open `template-sample/builder.html` in your browser for the dedicated **Visual t
 You can:
 
 1. Select fields from all supported field types.
-2. Expand/collapse selected field accordions to edit labels, keys, defaults, validation limits, tabs, groups, and order.
+2. Expand/collapse selected field accordions to edit labels, keys, defaults, validation limits, tabs, groups, and order. New fields default mostly to `data` for content and `design` for visual controls.
 3. Remove individual added fields or clear all fields.
 4. Add `visibleWhen` and `requiredWhen` show/hide rules.
 5. Toggle platform features like RSVP, messages, countdown, gallery, map, and music.
@@ -51,6 +51,7 @@ The validator checks JSON parsing, required metadata, linked HTML/CSS files, dup
 4. Add `maxLength`, defaults, and Arabic labels so the platform form stays friendly and layouts remain intact.
 5. Use `visibleWhen` and `requiredWhen` to hide optional fields until they are relevant.
 6. A `map` field named `location` provides the readable `{{location}}` and a clickable `{{locationUrl}}` value.
-7. Test long Arabic and English content and a 360px-wide viewport before publishing.
+7. Use `designControls.font` inside a field when that specific field needs its own font picker, such as names or headings.
+8. Test long Arabic and English content and a 360px-wide viewport before publishing.
 
 The browser reference page includes all supported field shapes, condition examples, sections, features, and a complete JSON starter.

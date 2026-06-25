@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safhat Visual template.json Builder</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="builder-page">
+
+    <header class="builder-topbar">
+        <a class="back-link" href="index.html">← Field Reference</a>
+        <div>
+            <span class="badge">Visual Builder</span>
+            <h1>Build template.json without hand-writing JSON</h1>
+            <p>Select fields, edit rules, import an existing file, and copy a clean platform-ready JSON result.</p>
+        </div>
+        <a class="topbar-action" href="#builder-import">Import existing JSON</a>
+    </header>
+
+    <main class="builder-main">
+        <div class="builder-shell">
+            <div class="builder-workspace">
+                <div class="builder-panel">
+                    <div class="builder-panel-title">
+                        <div>
+                            <h3>Template info</h3>
+                            <p>These values become the top-level metadata in template.json.</p>
+                        </div>
+                        <button class="ghost-button" type="button" data-builder-reset>Reset</button>
+                    </div>
+
+                    <div class="builder-form-grid">
+                        <label>
+                            <span>ID</span>
+                            <input id="builder-id" type="text" value="my-template" placeholder="my-template" />
+                        </label>
+                        <label>
+                            <span>Name</span>
+                            <input id="builder-name" type="text" value="My Template" placeholder="My Template" />
+                        </label>
+                        <label>
+                            <span>Version</span>
+                            <input id="builder-version" type="text" value="1.0.0" placeholder="1.0.0" />
+                        </label>
+                        <label>
+                            <span>Type</span>
+                            <input id="builder-type" type="text" value="custom" placeholder="invitation, portfolio..." />
+                        </label>
+                        <label>
+                            <span>Language</span>
+                            <input id="builder-language" type="text" value="ar" placeholder="ar" />
+                        </label>
+                        <label>
+                            <span>Direction</span>
+                            <select id="builder-direction">
+                                <option value="rtl" selected>rtl</option>
+                                <option value="ltr">ltr</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>HTML file</span>
+                            <input id="builder-html" type="text" value="index.html" />
+                        </label>
+                        <label>
+                            <span>CSS file</span>
+                            <input id="builder-css" type="text" value="style.css" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="builder-panel">
+                    <div class="builder-panel-title">
+                        <div>
+                            <h3>1. Add fields</h3>
+                            <p>Pick from all supported field types. You can add the same type more than once.</p>
+                        </div>
+                    </div>
+
+                    <div class="field-picker" data-field-picker></div>
+                </div>
+
+                <div class="builder-panel">
+                    <div class="builder-panel-title">
+                        <div>
+                            <h3>2. Selected fields</h3>
+                            <p>Edit labels, defaults, validation, order, tabs, and conditional show/hide rules. Use Remove to delete any added field.</p>
+                        </div>
+                        <div class="builder-title-actions">
+                            <button class="ghost-button" type="button" data-add-common-fields>Add common fields</button>
+                            <button class="danger-button" type="button" data-clear-fields>Clear fields</button>
+                        </div>
+                    </div>
+
+                    <div class="selected-fields" data-selected-fields></div>
+                </div>
+
+                <div class="builder-panel">
+                    <div class="builder-panel-title">
+                        <div>
+                            <h3>3. Features</h3>
+                            <p>Generate a clean <code>features</code> object for platform capabilities.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-toggle-grid" data-feature-toggles></div>
+                </div>
+            </div>
+
+            <aside class="builder-preview">
+                <div class="builder-panel sticky-preview">
+                    <div class="builder-panel-title">
+                        <div>
+                            <h3>Live JSON</h3>
+                            <p>This panel stays fixed while you build. Only the JSON/import areas scroll inside it.</p>
+                        </div>
+                        <button type="button" data-copy="builder-json-output">Copy JSON</button>
+                    </div>
+
+                    <div class="builder-status" data-builder-status>Ready</div>
+
+                    <pre class="builder-json"><code id="builder-json-output"></code></pre>
+
+                    <div class="import-box">
+                        <h4>Update existing template.json</h4>
+                        <p>Paste your current file, click import, then the UI will select the fields/features it finds so you can edit and copy again.</p>
+                        <textarea id="builder-import" placeholder='Paste template.json here...'></textarea>
+                        <div class="builder-actions">
+                            <button type="button" data-import-json>Import JSON</button>
+                            <button class="ghost-button" type="button" data-load-demo-json>Load demo</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="builder.js"></script>
+
+</body>
+
+</html>

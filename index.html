@@ -21,6 +21,9 @@
 
         <nav>
             <a href="#intro">Introduction</a>
+            <a href="#workflow">Build Workflow</a>
+            <a href="builder.html">JSON Builder ↗</a>
+            <a href="#quality">Quality Checklist</a>
             <a href="#field-structure">Field Structure</a>
             <a href="#common-properties">Common Properties</a>
             <a href="#validation">Validation</a>
@@ -59,13 +62,88 @@
 
             <div class="hero-actions">
                 <a href="#field-structure">Start Reading</a>
-                <a href="#full-template-json">View Full JSON</a>
+                <a href="builder.html">Open JSON Builder</a>
+            </div>
+        </section>
+
+        <section class="section" id="workflow">
+            <div class="section-title">
+                <span>01</span>
+                <div>
+                    <h2>Fast Template Workflow</h2>
+                    <p>Use the starter kit in this folder to create a clean, platform-ready template without rebuilding the same boilerplate each time.</p>
+                </div>
+            </div>
+
+            <div class="workflow-grid">
+                <article class="workflow-card">
+                    <span>1</span>
+                    <h3>Scaffold</h3>
+                    <p>Generate a template folder with linked HTML, CSS, and template.json.</p>
+                    <code>node scaffold-template.mjs my-template --name "My Template" --direction rtl</code>
+                </article>
+                <article class="workflow-card">
+                    <span>2</span>
+                    <h3>Design + bind</h3>
+                    <p>Build the layout, then replace editable content with matching <code>{{fieldKey}}</code> variables.</p>
+                    <code>&lt;h1&gt;{{title}}&lt;/h1&gt;</code>
+                </article>
+                <article class="workflow-card">
+                    <span>3</span>
+                    <h3>Validate</h3>
+                    <p>Catch duplicate keys, missing files, unsupported fields, and unmatched variables before publishing.</p>
+                    <code>node validate-template.mjs ../my-template</code>
+                </article>
+            </div>
+
+            <div class="callout">
+                <strong>One rule that prevents most template bugs:</strong>
+                every editable <code>{{variable}}</code> in HTML must have exactly one field with the same root key in <code>template.json</code>.
+            </div>
+        </section>
+
+        <section class="section" id="quality">
+            <div class="section-title">
+                <span>02</span>
+                <div>
+                    <h2>Publish Quality Checklist</h2>
+                    <p>Run through this compact list before adding any template to your platform.</p>
+                </div>
+            </div>
+
+            <div class="checklist-grid">
+                <label><input type="checkbox"> Unique, readable template <code>id</code></label>
+                <label><input type="checkbox"> Every field has an Arabic user-facing label</label>
+                <label><input type="checkbox"> Required fields have useful defaults or placeholders</label>
+                <label><input type="checkbox"> Text fields have sensible character limits</label>
+                <label><input type="checkbox"> Repeater items have complete <code>itemFields</code></label>
+                <label><input type="checkbox"> Optional links safely use <code>#</code> or a valid URL</label>
+                <label><input type="checkbox"> Mobile layout works at 360px wide</label>
+                <label><input type="checkbox"> Validator passes with no errors</label>
+            </div>
+        </section>
+
+        <section class="section builder-link-section" id="json-builder">
+            <div class="section-title">
+                <span>03</span>
+                <div>
+                    <h2>Visual template.json Builder</h2>
+                    <p>The builder now lives on its own bigger page so the docs stay focused and the JSON preview has room to breathe.</p>
+                </div>
+            </div>
+
+            <div class="builder-link-card">
+                <div>
+                    <strong>Open the dedicated builder</strong>
+                    <p>Select fields, remove fields, add show/hide rules, import an existing template.json, and copy the live JSON.</p>
+                </div>
+                <a href="builder.html">Open builder.html</a>
             </div>
         </section>
 
         <section class="section" id="field-structure">
             <div class="section-title">
-                <span>01</span>
+                <span>04</span>
                 <div>
                     <h2>Basic Field Structure</h2>
                     <p>Every editable value in the HTML should have a matching field in template.json.</p>
@@ -124,7 +202,7 @@
 
         <section class="section" id="common-properties">
             <div class="section-title">
-                <span>02</span>
+                <span>05</span>
                 <div>
                     <h2>Common Field Properties</h2>
                     <p>These properties can be used with most field types.</p>
@@ -247,7 +325,7 @@
 
         <section class="section" id="validation">
             <div class="section-title">
-                <span>03</span>
+                <span>06</span>
                 <div>
                     <h2>Validation Properties</h2>
                     <p>Use these properties to control data quality before rendering the template.</p>
@@ -308,7 +386,7 @@
 
         <section class="section" id="conditions">
             <div class="section-title">
-                <span>04</span>
+                <span>07</span>
                 <div>
                     <h2>Conditional Visibility and Required Rules</h2>
                     <p>Use conditions when a field should appear only after another field value is selected.</p>
@@ -930,7 +1008,8 @@
                         <span>HTML</span>
                         <button data-copy="map-html">Copy</button>
                     </div>
-                    <pre><code id="map-html">&lt;a href="&#123;&#123;locationUrl&#125;&#125;" target="_blank" rel="noopener" data-section="location"&gt;
+                    <pre><code id="map-html">&lt;strong&gt;&#123;&#123;location&#125;&#125;&lt;/strong&gt;
+&lt;a href="&#123;&#123;locationUrl&#125;&#125;" target="_blank" rel="noopener"&gt;
     Open Location
 &lt;/a&gt;</code></pre>
                 </div>
@@ -941,13 +1020,13 @@
                         <button data-copy="map-json">Copy</button>
                     </div>
                     <pre><code id="map-json">{
-  "key": "locationUrl",
+  "key": "location",
   "label": "Location",
   "type": "map",
   "formTab": "location",
   "required": true,
   "placeholder": "Choose location from map",
-  "hint": "The selected location will be used as a clickable link",
+  "hint": "Creates {{location}} for the place name and {{locationUrl}} for the clickable map link",
   "provider": "google",
   "returnType": "url",
   "pattern": "^https?:\\/\\/.+",
@@ -1237,7 +1316,7 @@
 
         <section class="section" id="features">
             <div class="section-title">
-                <span>05</span>
+                <span>08</span>
                 <div>
                     <h2>Feature Blocks</h2>
                     <p>Use feature blocks for built-in interactions like messages, feelings, RSVP, votes, or forms.</p>
@@ -1299,7 +1378,7 @@
 
         <section class="section" id="sections">
             <div class="section-title">
-                <span>06</span>
+                <span>09</span>
                 <div>
                     <h2>Sections</h2>
                     <p>Sections are used by your builder to select, hide, move, resize, and style parts of the template.
@@ -1348,7 +1427,7 @@
 
         <section class="section" id="full-template-json">
             <div class="section-title">
-                <span>07</span>
+                <span>10</span>
                 <div>
                     <h2>Full template.json Starter</h2>
                     <p>This is a starter object you can copy when building a new Safhat template.</p>
@@ -1600,37 +1679,7 @@
 
     </main>
 
-    <script>
-        const buttons = document.querySelectorAll("[data-copy]");
-
-        buttons.forEach((button) => {
-            button.addEventListener("click", async () => {
-                const targetId = button.getAttribute("data-copy");
-                const target = document.getElementById(targetId);
-
-                if (!target) return;
-
-                const text = target.innerText;
-
-                try {
-                    await navigator.clipboard.writeText(text);
-                    const oldText = button.innerText;
-                    button.innerText = "Copied";
-                    button.classList.add("copied");
-
-                    setTimeout(() => {
-                        button.innerText = oldText;
-                        button.classList.remove("copied");
-                    }, 1200);
-                } catch {
-                    button.innerText = "Copy failed";
-                    setTimeout(() => {
-                        button.innerText = "Copy";
-                    }, 1200);
-                }
-            });
-        });
-    </script>
+    <script src="copy.js"></script>
 
 </body>
 

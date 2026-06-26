@@ -23,13 +23,21 @@ Open `template-sample/sandbox.html` when you want to test a complete template.
 
 You can:
 
-1. Paste existing `template.json`, HTML, and CSS.
+1. Select any template project in this workspace to automatically load its `template.json`, HTML, and CSS, or paste files manually.
 2. Toggle between `template.json`, HTML, CSS, and mock data tabs in one clean editor area.
 3. Autosave all sandbox data to localStorage so refreshes do not wipe your work.
 4. Generate or edit mock data from your fields.
 5. Validate required values, regex patterns, duplicate keys, HTML bindings, and feature blocks.
 6. Render a live iframe preview with mock data in its own right-side preview panel.
 7. Use feature helpers like Feelings and RSVP to inject the recommended JSON, HTML, CSS, and small JS snippets.
+
+When template folders are added, removed, renamed, or edited, refresh the sandbox project catalog from the `templates` root:
+
+```bash
+node template-sample/refresh-template-projects.mjs
+```
+
+The command creates `template-projects.js`, an embedded browser-safe snapshot of the three files for every valid project. This lets the dropdown work even when `sandbox.html` is opened directly without a development server. When the page is served over HTTP, it reads the latest project files on every selection and uses the snapshot only as a fallback.
 
 The sandbox follows the rendering guide: it extracts body content, removes stylesheet links, injects CSS, rewrites `assets/` paths when `assetsBaseUrl` exists, renders `{{variables}}` and `{{#each}}` loops, injects color variables, and previews `__designFont` / `__fieldFonts`.
 

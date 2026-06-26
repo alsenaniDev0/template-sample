@@ -27,6 +27,13 @@
                 <h2>Template test bench</h2>
                 <p>Use this page to test a complete template before publishing it to your platform.</p>
             </div>
+            <div class="sandbox-project-picker">
+                <label for="sandbox-project">Load a template project</label>
+                <select id="sandbox-project" data-template-project>
+                    <option value="">Choose a project…</option>
+                </select>
+                <small data-project-status>Reading the project catalog…</small>
+            </div>
             <div class="sandbox-actions">
                 <button type="button" data-sandbox-action="load-demo">Load demo</button>
                 <button type="button" data-sandbox-action="validate">Validate</button>
@@ -162,6 +169,7 @@
     </main>
 
     <script src="copy.js"></script>
+    <script src="template-projects.js"></script>
     <script src="sandbox.js"></script>
 
 </body>

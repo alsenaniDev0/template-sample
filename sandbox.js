@@ -5,12 +5,15 @@ const sandboxEditors = {
     mock: document.getElementById("sandbox-mock"),
     validation: document.getElementById("sandbox-validation"),
     preview: document.getElementById("sandbox-preview"),
-    autosaveStatus: document.querySelector("[data-autosave-status]")
+    autosaveStatus: document.querySelector("[data-autosave-status]"),
+    project: document.querySelector("[data-template-project]"),
+    projectStatus: document.querySelector("[data-project-status]")
 };
 
 const SANDBOX_STORAGE_KEY = "safhat-template-sandbox:v1";
 
 let lastRenderedHtml = "";
+let projectLoadToken = 0;
 
 const sandboxDemo = {
     json: {
@@ -464,6 +467,7 @@ function sandboxState() {
         html: sandboxEditors.html.value,
         css: sandboxEditors.css.value,
         mock: sandboxEditors.mock.value,
+        selectedProject: sandboxEditors.project?.value || "",
         activeTab: currentSandboxTab(),
         savedAt: new Date().toISOString()
     };
@@ -488,6 +492,7 @@ function restoreSandboxState() {
         sandboxEditors.html.value = saved.html || "";
         sandboxEditors.css.value = saved.css || "";
         sandboxEditors.mock.value = saved.mock || "";
+        if (sandboxEditors.project) sandboxEditors.project.value = saved.selectedProject || "";
         setActiveSandboxTab(saved.activeTab || "json");
         setAutosaveStatus("Restored autosaved work");
         return true;
@@ -857,16 +862,23 @@ function prepareTemplateHtml(html, template) {
     const body = bodyMatch ? bodyMatch[1] : withoutStylesheets;
 
     return {
-        body: rewriteAssetPaths(body, template?.assetsBaseUrl)
+        body: rewriteAssetPaths(body, sandboxAssetBaseUrl(template))
     };
 }
 
 function buildRenderedCss(css, data, template) {
-    const assetSafeCss = rewriteAssetPaths(css, template?.assetsBaseUrl);
+    const assetSafeCss = rewriteAssetPaths(css, sandboxAssetBaseUrl(template));
     const variableCss = buildColorVariableCss(data, template);
     const fontCss = buildFontCss(data, template);
 
     return [fontCss, variableCss, assetSafeCss].filter(Boolean).join("\n\n");
+}
+
+function sandboxAssetBaseUrl(template) {
+    if (template?.assetsBaseUrl) return template.assetsBaseUrl;
+
+    const folder = sandboxEditors.project?.value;
+    return folder ? `../${encodeURIComponent(folder)}` : "";
 }
 
 function rewriteAssetPaths(source, assetsBaseUrl) {
@@ -953,7 +965,102 @@ function syncFeatureHelperChecks() {
     });
 }
 
+function populateTemplateProjects() {
+    const projects = Array.isArray(window.SAFHAT_TEMPLATE_PROJECTS)
+        ? window.SAFHAT_TEMPLATE_PROJECTS
+        : [];
+
+    if (!sandboxEditors.project) return;
+
+    projects.forEach((project) => {
+        const option = document.createElement("option");
+        option.value = project.folder;
+        option.textContent = project.name === project.folder
+            ? project.folder
+            : `${project.name} — ${project.folder}`;
+        sandboxEditors.project.appendChild(option);
+    });
+
+    if (sandboxEditors.projectStatus) {
+        sandboxEditors.projectStatus.textContent = projects.length
+            ? `${projects.length} projects available. Selecting one replaces the current editors.`
+            : "No projects found. Run node template-sample/refresh-template-projects.mjs from the templates folder.";
+        sandboxEditors.projectStatus.classList.toggle("warn", !projects.length);
+    }
+}
+
+async function loadTemplateProject(folder) {
+    if (!folder) return;
+
+    const project = (window.SAFHAT_TEMPLATE_PROJECTS || []).find((item) => item.folder === folder);
+    if (!project) {
+        setAutosaveStatus(`Project not found: ${folder}`, "warn");
+        return;
+    }
+
+    const loadToken = ++projectLoadToken;
+    let files = project;
+
+    if (sandboxEditors.projectStatus) {
+        sandboxEditors.projectStatus.textContent = `Loading ${folder}…`;
+        sandboxEditors.projectStatus.classList.remove("warn");
+    }
+
+    if (window.location.protocol !== "file:") {
+        try {
+            files = await fetchTemplateProject(folder);
+        } catch (error) {
+            files = project;
+            console.warn(`Could not read the latest ${folder} files; using the catalog snapshot.`, error);
+        }
+    }
+
+    if (loadToken !== projectLoadToken || sandboxEditors.project.value !== folder) return;
+
+    sandboxEditors.json.value = files.json;
+    sandboxEditors.html.value = files.html;
+    sandboxEditors.css.value = files.css;
+    setActiveSandboxTab("json");
+    syncFeatureHelperChecks();
+    generateMockData();
+    renderSandbox();
+    setAutosaveStatus(`Loaded ${project.folder}`);
+
+    if (sandboxEditors.projectStatus) {
+        sandboxEditors.projectStatus.textContent = `Loaded ${files.files.html}, ${files.files.css}, and template.json from ${project.folder}.`;
+        sandboxEditors.projectStatus.classList.remove("warn");
+    }
+}
+
+async function fetchTemplateProject(folder) {
+    const base = `../${encodeURIComponent(folder)}`;
+    const jsonResponse = await fetch(`${base}/template.json`, { cache: "no-store" });
+    if (!jsonResponse.ok) throw new Error(`template.json returned ${jsonResponse.status}`);
+
+    const json = await jsonResponse.text();
+    const template = JSON.parse(json);
+    const htmlFile = template.html || "index.html";
+    const cssFile = template.css || "style.css";
+    const encodeFilePath = (path) => String(path).split("/").map(encodeURIComponent).join("/");
+
+    const [htmlResponse, cssResponse] = await Promise.all([
+        fetch(`${base}/${encodeFilePath(htmlFile)}`, { cache: "no-store" }),
+        fetch(`${base}/${encodeFilePath(cssFile)}`, { cache: "no-store" })
+    ]);
+
+    if (!htmlResponse.ok) throw new Error(`${htmlFile} returned ${htmlResponse.status}`);
+    if (!cssResponse.ok) throw new Error(`${cssFile} returned ${cssResponse.status}`);
+
+    return {
+        json,
+        html: await htmlResponse.text(),
+        css: await cssResponse.text(),
+        files: { html: htmlFile, css: cssFile }
+    };
+}
+
 function loadDemo() {
+    if (sandboxEditors.project) sandboxEditors.project.value = "";
     sandboxEditors.json.value = pretty(sandboxDemo.json);
     sandboxEditors.html.value = sandboxDemo.html;
     sandboxEditors.css.value = sandboxDemo.css;
@@ -1037,6 +1144,12 @@ document.addEventListener("click", (event) => {
 });
 
 document.addEventListener("change", (event) => {
+    const projectSelect = event.target.closest("[data-template-project]");
+    if (projectSelect) {
+        loadTemplateProject(projectSelect.value);
+        return;
+    }
+
     const helperToggle = event.target.closest("[data-feature-helper]");
     if (helperToggle) {
         applyFeatureHelper(helperToggle.dataset.featureHelper, helperToggle.checked);
@@ -1052,6 +1165,8 @@ document.addEventListener("change", (event) => {
         sandboxEditors[key]._sandboxTimer = window.setTimeout(renderSandbox, 350);
     });
 });
+
+populateTemplateProjects();
 
 if (restoreSandboxState()) {
     syncFeatureHelperChecks();

@@ -1,6 +1,6 @@
 # Safhat template starter kit
 
-`index.html`, `builder.html`, `style.css`, `copy.js`, and `builder.js` are the field-schema reference plus a visual `template.json` builder. The two scripts below make the reference practical when you build a new dynamic template.
+`index.html`, `builder.html`, `sandbox.html`, `style.css`, `copy.js`, `builder.js`, and `sandbox.js` are the field-schema reference plus tools for building and testing dynamic templates. `TEMPLATE_RENDERING_GUIDE.md` is the source of truth for how the real Safhat renderer works.
 
 ## Build or update template.json visually
 
@@ -16,6 +16,22 @@ You can:
 6. Toggle platform features like RSVP, messages, countdown, gallery, map, and music. Selected features generate full useful defaults, not only `{ "enabled": true }`.
 7. Copy the live JSON preview directly into `template.json`.
 8. Paste an existing `template.json`, import it, update it in the UI, then copy the new version.
+
+## Test a full template in the sandbox
+
+Open `template-sample/sandbox.html` when you want to test a complete template.
+
+You can:
+
+1. Paste existing `template.json`, HTML, and CSS.
+2. Toggle between `template.json`, HTML, CSS, and mock data tabs in one clean editor area.
+3. Autosave all sandbox data to localStorage so refreshes do not wipe your work.
+4. Generate or edit mock data from your fields.
+5. Validate required values, regex patterns, duplicate keys, HTML bindings, and feature blocks.
+6. Render a live iframe preview with mock data in its own right-side preview panel.
+7. Use feature helpers like Feelings and RSVP to inject the recommended JSON, HTML, CSS, and small JS snippets.
+
+The sandbox follows the rendering guide: it extracts body content, removes stylesheet links, injects CSS, rewrites `assets/` paths when `assetsBaseUrl` exists, renders `{{variables}}` and `{{#each}}` loops, injects color variables, and previews `__designFont` / `__fieldFonts`.
 
 ## Create a template
 

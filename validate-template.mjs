@@ -14,7 +14,7 @@ const root = path.resolve(directory);
 const errors = [];
 const warnings = [];
 const supportedTypes = new Set([
-    "text", "textarea", "select", "radio", "color", "font", "icon", "image",
+    "text", "textarea", "select", "radio", "color", "colors", "font", "icon", "image",
     "url", "map", "youtube", "date", "time", "list", "repeater", "names"
 ]);
 const reservedVariables = new Set(["this", "number", "index", "key", "first", "last"]);
@@ -60,9 +60,15 @@ const verifyFields = (fields, label, knownKeys) => {
         if (["select", "radio", "icon"].includes(field.type) && (!Array.isArray(field.options) || !field.options.length)) {
             error(`${location} (${field.key}) needs a non-empty options array`);
         }
+        if (field.type === "colors" && (!Array.isArray(field.options) || !field.options.length)) {
+            error(`${location} (${field.key}) needs color options like [{ "label": "الرئيسي", "value": "primary" }]`);
+        }
         if (field.type === "repeater") {
             if (!Array.isArray(field.itemFields) || !field.itemFields.length) error(`${location} (${field.key}) needs itemFields`);
             verifyFields(field.itemFields, `${location}.itemFields`, knownKeys);
+        }
+        if (field.designControls?.font?.enabled && !field.designControls.font.selector) {
+            warn(`${location} (${field.key}) has designControls.font enabled but no selector`);
         }
         if (field.minLength && field.maxLength && field.minLength > field.maxLength) {
             error(`${location} has minLength greater than maxLength`);
@@ -116,10 +122,50 @@ for (const match of source.matchAll(eachPattern)) {
 }
 if (template?.fields) {
     template.fields.forEach((field) => {
+        if (!field.key) return;
+
+        if (field.type === "color" && source.includes(`--${toKebab(field.key)}`)) {
+            usedKeys.add(field.key);
+        }
+
+        if (field.type === "colors" && source.includes(`--${toKebab(field.key)}-`)) {
+            usedKeys.add(field.key);
+        }
+    });
+
+    template.fields.forEach((field) => {
         if (field.key && !usedKeys.has(field.key) && field.type !== "repeater") {
             warn(`Field "${field.key}" is not used in HTML or CSS`);
         }
+        const selector = field.designControls?.font?.selector;
+        if (field.designControls?.font?.enabled && selector && !source.includes(selector.replace(/^[.#]/, ""))) {
+            warn(`Field "${field.key}" has designControls.font.selector "${selector}" but it may not exist in HTML/CSS`);
+        }
     });
+}
+
+function toKebab(value) {
+    return String(value || "")
+        .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .toLowerCase();
+}
+
+if (template?.features?.feelings?.enabled) {
+    for (const marker of ["data-feature=\"feelings\"", "data-feeling-name", "data-feeling-message", "data-send-feeling", "data-feeling-result", "data-feelings-list"]) {
+        if (!source.includes(marker)) warn(`Feelings feature is enabled but ${marker} is missing`);
+    }
+}
+
+if (template?.features?.rsvp?.enabled) {
+    for (const marker of ["data-feature=\"rsvp\"", "data-rsvp-name", "data-rsvp-status", "data-rsvp-message"]) {
+        if (!source.includes(marker)) warn(`RSVP feature is enabled but ${marker} is missing`);
+    }
+}
+
+if (source.includes("assets/") && !template?.assetsBaseUrl) {
+    warn("Local assets are used. Safhat rewrites them with assetsBaseUrl; add assetsBaseUrl for production templates.");
 }
 
 for (const message of errors) console.error(`ERROR: ${message}`);

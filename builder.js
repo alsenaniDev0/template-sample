@@ -91,6 +91,27 @@ const FIELD_BLUEPRINTS = [
         }
     },
     {
+        type: "colors",
+        title: "Colors",
+        description: "Multiple theme colors injected as CSS variables.",
+        defaults: {
+            key: "themeColors",
+            label: "ألوان التصميم",
+            required: false,
+            defaultValue: {
+                primary: "#7c3aed",
+                accent: "#f97316"
+            },
+            options: [
+                { label: "الرئيسي", value: "primary" },
+                { label: "التمييز", value: "accent" }
+            ],
+            formTab: "design",
+            group: "colors",
+            width: "full"
+        }
+    },
+    {
         type: "font",
         title: "Font",
         description: "User-selectable font family.",
@@ -321,6 +342,7 @@ const FEATURE_BLUEPRINTS = [
         defaults: {
             enabled: true,
             preventDuplicate: true,
+            nameRequired: false,
             title: "هل ستحضر؟",
             description: "يسعدنا معرفة حضورك للمناسبة"
         }
@@ -402,7 +424,7 @@ const FEATURE_BLUEPRINTS = [
     }
 ];
 
-const OPTION_TYPES = new Set(["select", "radio", "font", "icon"]);
+const OPTION_TYPES = new Set(["select", "radio", "font", "icon", "colors"]);
 const ARRAY_DEFAULT_TYPES = new Set(["list", "names"]);
 const FORM_TABS = ["data", "design", "features", "settings", "media", "content"];
 const PATTERN_PRESETS = [
@@ -1366,6 +1388,7 @@ function demoTemplate() {
             rsvp: {
                 enabled: true,
                 preventDuplicate: true,
+                nameRequired: false,
                 title: "هل ستحضر؟",
                 description: "يسعدنا معرفة حضورك للمناسبة"
             },

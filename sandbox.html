@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safhat Template Sandbox</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="sandbox-page">
+
+    <header class="builder-topbar sandbox-topbar">
+        <a class="back-link" href="index.html">← Field Reference</a>
+        <div>
+            <span class="badge">Template Sandbox</span>
+            <h1>Test full template HTML, CSS, and template.json</h1>
+            <p>Paste an existing template or build from helpers, validate fields/features, render mock data, and preview
+                the result like a mini platform.</p>
+        </div>
+        <a class="topbar-action" href="builder.html">Open JSON Builder</a>
+    </header>
+
+    <main class="sandbox-main">
+        <section class="sandbox-panel sandbox-toolbar">
+            <div>
+                <h2>Template test bench</h2>
+                <p>Use this page to test a complete template before publishing it to your platform.</p>
+            </div>
+            <div class="sandbox-actions">
+                <button type="button" data-sandbox-action="load-demo">Load demo</button>
+                <button type="button" data-sandbox-action="validate">Validate</button>
+                <button type="button" data-sandbox-action="render">Render preview</button>
+                <button class="ghost-button" type="button" data-sandbox-action="copy-preview-html">Copy rendered
+                    HTML</button>
+            </div>
+        </section>
+
+        <div class="sandbox-layout">
+            <section class="sandbox-workspace">
+                <article class="sandbox-panel">
+                    <div class="sandbox-panel-title">
+                        <div>
+                            <h3>Feature helpers</h3>
+                            <p>Check a feature to inject its recommended template.json, HTML, CSS, and small JS helper
+                                snippets.</p>
+                        </div>
+                    </div>
+
+                    <div class="sandbox-helper-grid">
+                        <label class="sandbox-helper-toggle">
+                            <input type="checkbox" data-feature-helper="feelings">
+                            <span>
+                                <strong>Feelings section</strong>
+                                <small>Add messages/feelings JSON + HTML + CSS + notice JS.</small>
+                            </span>
+                        </label>
+                        <label class="sandbox-helper-toggle">
+                            <input type="checkbox" data-feature-helper="rsvp">
+                            <span>
+                                <strong>RSVP section</strong>
+                                <small>Add attendance response JSON + HTML + CSS.</small>
+                            </span>
+                        </label>
+                    </div>
+                </article>
+
+                <article class="sandbox-panel validation-panel">
+                    <div class="sandbox-panel-title">
+                        <div>
+                            <h3>Validation</h3>
+                            <p>Schema, field bindings, regex, required values, and feature block checks.</p>
+                        </div>
+                    </div>
+                    <div id="sandbox-validation" class="sandbox-validation"></div>
+                </article>
+
+                <article class="sandbox-panel sandbox-editor-panel">
+                    <div class="sandbox-panel-title">
+                        <div>
+                            <h3>Template files and mock data</h3>
+                            <p>Toggle between <code>template.json</code>, HTML, CSS, and mock data. Everything autosaves
+                                locally.</p>
+                        </div>
+                        <span class="autosave-status" data-autosave-status>Autosave ready</span>
+                    </div>
+
+                    <div class="sandbox-tabs" role="tablist" aria-label="Template file editors">
+                        <button type="button" data-sandbox-tab="html" role="tab" aria-selected="false">HTML</button>
+                        <button type="button" data-sandbox-tab="css" role="tab" aria-selected="false">CSS</button>
+                        <button class="active" type="button" data-sandbox-tab="json" role="tab"
+                            aria-selected="true">template.json</button>
+                        <button type="button" data-sandbox-tab="mock" role="tab" aria-selected="false">Mock
+                            data</button>
+                    </div>
+
+                    <div class="sandbox-tab-panels">
+                        <section class="sandbox-tab-panel active" data-sandbox-panel="json" role="tabpanel">
+                            <div class="sandbox-editor-head">
+                                <div>
+                                    <strong>template.json</strong>
+                                    <p>Paste your existing file or use helper buttons to build it.</p>
+                                </div>
+                                <button class="ghost-button" type="button" data-copy="sandbox-json">Copy JSON</button>
+                            </div>
+                            <textarea id="sandbox-json" class="sandbox-editor" spellcheck="false"></textarea>
+                        </section>
+
+                        <section class="sandbox-tab-panel" data-sandbox-panel="html" role="tabpanel" hidden>
+                            <div class="sandbox-editor-head">
+                                <div>
+                                    <strong>HTML</strong>
+                                    <p>Use Mustache variables like <code>{{title}}</code> and loops like
+                                        <code>{{#each names}}</code>.</p>
+                                </div>
+                                <button class="ghost-button" type="button" data-copy="sandbox-html">Copy HTML</button>
+                            </div>
+                            <textarea id="sandbox-html" class="sandbox-editor tall" spellcheck="false"></textarea>
+                        </section>
+
+                        <section class="sandbox-tab-panel" data-sandbox-panel="css" role="tabpanel" hidden>
+                            <div class="sandbox-editor-head">
+                                <div>
+                                    <strong>CSS</strong>
+                                    <p>Paste your template styles here. The preview iframe injects them automatically.
+                                    </p>
+                                </div>
+                                <button class="ghost-button" type="button" data-copy="sandbox-css">Copy CSS</button>
+                            </div>
+                            <textarea id="sandbox-css" class="sandbox-editor tall" spellcheck="false"></textarea>
+                        </section>
+
+                        <section class="sandbox-tab-panel" data-sandbox-panel="mock" role="tabpanel" hidden>
+                            <div class="sandbox-editor-head">
+                                <div>
+                                    <strong>Mock data</strong>
+                                    <p>Generated from fields. Edit values to test long text, empty fields, and regex
+                                        rules.</p>
+                                </div>
+                                <button class="ghost-button" type="button" data-sandbox-action="generate-mock">Generate
+                                    mock</button>
+                            </div>
+                            <textarea id="sandbox-mock" class="sandbox-editor tall mock-editor"
+                                spellcheck="false"></textarea>
+                        </section>
+                    </div>
+                </article>
+            </section>
+
+            <aside class="sandbox-preview-column">
+                <article class="sandbox-panel preview-panel">
+                    <div class="sandbox-panel-title">
+                        <div>
+                            <h3>Live preview</h3>
+                            <p>Rendered using your mock data and current CSS.</p>
+                        </div>
+                    </div>
+                    <iframe id="sandbox-preview" title="Template preview"></iframe>
+                </article>
+            </aside>
+        </div>
+    </main>
+
+    <script src="copy.js"></script>
+    <script src="sandbox.js"></script>
+
+</body>
+
+</html>

@@ -1407,23 +1407,49 @@
             <div class="code-grid">
                 <div class="code-card">
                     <div class="code-header">
-                        <span>HTML feature block</span>
+                        <span>HTML feelings block</span>
                         <button data-copy="feature-html">Copy</button>
                     </div>
-                    <pre><code id="feature-html">&lt;section data-section="messages" data-feature="feelings"&gt;
+                    <pre><code id="feature-html">&lt;section class="feelings-section"
+    data-feature="feelings"
+    data-approval-mode="manual"
+    data-prevent-duplicate="true"
+    data-rate-limit-minutes="5"&gt;
 
-    &lt;input type="text" placeholder="Your name" data-feeling-name /&gt;
+    &lt;div class="feelings-header"&gt;
+        &lt;span class="feelings-icon"&gt;💌&lt;/span&gt;
+        &lt;div&gt;
+            &lt;h2&gt;شارك مشاعرك&lt;/h2&gt;
+            &lt;p&gt;اكتب رسالة جميلة لأصحاب الدعوة&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-    &lt;textarea placeholder="Write message" data-feeling-message&gt;&lt;/textarea&gt;
+    &lt;div class="interaction-card"&gt;
+        &lt;p class="feeling-notice" data-feeling-notice&gt;
+            تنبيه: رسالتك لن تظهر مباشرة، وستحتاج موافقة صاحب التصميم قبل نشرها للزوار.
+        &lt;/p&gt;
 
-    &lt;button type="button" data-send-feeling&gt;
-        Send
-    &lt;/button&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="feelingName"&gt;اسمك&lt;/label&gt;
+            &lt;input id="feelingName" class="interaction-input" type="text"
+                placeholder="اكتب اسمك" maxlength="60" data-feeling-name /&gt;
+        &lt;/div&gt;
 
-    &lt;p data-feeling-result&gt;&lt;/p&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="feelingMessage"&gt;رسالتك&lt;/label&gt;
+            &lt;textarea id="feelingMessage" class="interaction-textarea"
+                placeholder="اكتب تهنئتك هنا..." maxlength="220" rows="4"
+                data-feeling-message&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
 
-    &lt;div data-feelings-list&gt;&lt;/div&gt;
+        &lt;button type="button" class="interaction-submit" data-send-feeling&gt;
+            إرسال الرسالة
+        &lt;/button&gt;
 
+        &lt;p class="interaction-message" data-feeling-result&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="feelings-list" data-feelings-list&gt;&lt;/div&gt;
 &lt;/section&gt;</code></pre>
                 </div>
 
@@ -1439,20 +1465,126 @@
       "approvalMode": "manual",
       "preventDuplicate": true,
       "rateLimitMinutes": 5,
-      "maxNameLength": 60,
-      "maxMessageLength": 220,
-      "title": "Messages",
-      "description": "Visitors can write messages"
+      "title": "شارك مشاعرك",
+      "description": "اكتب رسالة جميلة لأصحاب الدعوة"
     },
     "rsvp": {
       "enabled": true,
       "preventDuplicate": true,
-      "maxNameLength": 60,
-      "title": "Visitor Response",
-      "description": "Visitors can choose a response"
+      "title": "هل ستحضر؟",
+      "description": "يسعدنا معرفة حضورك للمناسبة"
     }
   }
 }</code></pre>
+                </div>
+            </div>
+
+            <div class="code-grid">
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>CSS feature styles</span>
+                        <button data-copy="feature-css">Copy</button>
+                    </div>
+                    <pre><code id="feature-css">.feelings-section {
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.feelings-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.feelings-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #fef3c7;
+  font-size: 26px;
+}
+
+.interaction-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  background: #ffffff;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.interaction-input,
+.interaction-textarea {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.interaction-submit {
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 18px;
+  color: #ffffff;
+  background: #7c3aed;
+  font-weight: 800;
+}
+
+.feeling-notice,
+.interaction-message {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.7;
+}</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <span>JS notice behavior</span>
+                        <button data-copy="feature-js">Copy</button>
+                    </div>
+                    <pre><code id="feature-js">&lt;script&gt;
+    (function () {
+        var feelingsSection = document.querySelector('[data-feature="feelings"]');
+        if (!feelingsSection) return;
+
+        var notice = feelingsSection.querySelector('[data-feeling-notice]');
+        if (!notice) return;
+
+        function updateFeelingNotice() {
+            var approvalMode = feelingsSection.getAttribute('data-approval-mode');
+
+            if (!approvalMode || approvalMode.indexOf('{{') === 0) {
+                approvalMode = 'manual';
+            }
+
+            if (approvalMode === 'auto') {
+                notice.textContent = 'رسالتك ستظهر مباشرة بعد الإرسال.';
+            } else {
+                notice.textContent = 'تنبيه: رسالتك لن تظهر مباشرة، وستحتاج موافقة صاحب التصميم قبل نشرها للزوار.';
+            }
+        }
+
+        updateFeelingNotice();
+
+        var observer = new MutationObserver(updateFeelingNotice);
+
+        observer.observe(feelingsSection, {
+            attributes: true,
+            attributeFilter: ['data-approval-mode']
+        });
+    })();
+&lt;/script&gt;</code></pre>
                 </div>
             </div>
         </section>
@@ -1554,21 +1686,18 @@
   },
   "features": {
     "feelings": {
-      "enabled": false,
+      "enabled": true,
       "approvalMode": "manual",
       "preventDuplicate": true,
       "rateLimitMinutes": 5,
-      "maxNameLength": 60,
-      "maxMessageLength": 220,
-      "title": "Messages",
-      "description": "Visitors can write messages"
+      "title": "شارك مشاعرك",
+      "description": "اكتب رسالة جميلة لأصحاب الدعوة"
     },
     "rsvp": {
-      "enabled": false,
+      "enabled": true,
       "preventDuplicate": true,
-      "maxNameLength": 60,
-      "title": "Visitor Response",
-      "description": "Visitors can choose a response"
+      "title": "هل ستحضر؟",
+      "description": "يسعدنا معرفة حضورك للمناسبة"
     }
   },
   "fields": [

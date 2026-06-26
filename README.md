@@ -13,7 +13,7 @@ You can:
 3. Add custom regex validation with `pattern` and `patternMessage`, or use quick presets for URL, numbers-only, Arabic-only, and English-only.
 4. Remove individual added fields or clear all fields.
 5. Add `visibleWhen` and `requiredWhen` show/hide rules.
-6. Toggle platform features like RSVP, messages, countdown, gallery, map, and music.
+6. Toggle platform features like RSVP, messages, countdown, gallery, map, and music. Selected features generate full useful defaults, not only `{ "enabled": true }`.
 7. Copy the live JSON preview directly into `template.json`.
 8. Paste an existing `template.json`, import it, update it in the UI, then copy the new version.
 

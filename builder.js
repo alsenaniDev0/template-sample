@@ -301,15 +301,105 @@ const FIELD_BLUEPRINTS = [
 ];
 
 const FEATURE_BLUEPRINTS = [
-    ["animations", "Animations", "Entrance effects and motion controls."],
-    ["music", "Music", "Background audio or sound URL support."],
-    ["rsvp", "RSVP", "Visitor attendance response."],
-    ["feelings", "Messages", "Guest messages, feelings, wishes."],
-    ["countdown", "Countdown", "Timer to date/time."],
-    ["gallery", "Gallery", "Extra image collection."],
-    ["map", "Map", "Location/map interaction."],
-    ["sharing", "Sharing", "Social sharing buttons."],
-    ["guestNames", "Guest names", "Personalized invitee names."]
+    {
+        key: "feelings",
+        label: "Messages",
+        description: "Guest messages, feelings, wishes.",
+        defaults: {
+            enabled: true,
+            approvalMode: "manual",
+            preventDuplicate: true,
+            rateLimitMinutes: 5,
+            title: "شارك مشاعرك",
+            description: "اكتب رسالة جميلة لأصحاب الدعوة"
+        }
+    },
+    {
+        key: "rsvp",
+        label: "RSVP",
+        description: "Visitor attendance response.",
+        defaults: {
+            enabled: true,
+            preventDuplicate: true,
+            title: "هل ستحضر؟",
+            description: "يسعدنا معرفة حضورك للمناسبة"
+        }
+    },
+    {
+        key: "animations",
+        label: "Animations",
+        description: "Entrance effects and motion controls.",
+        defaults: {
+            enabled: true,
+            entrance: "fade-up",
+            durationMs: 700,
+            once: true
+        }
+    },
+    {
+        key: "music",
+        label: "Music",
+        description: "Background audio or sound URL support.",
+        defaults: {
+            enabled: true,
+            autoplay: false,
+            loop: true,
+            title: "الموسيقى"
+        }
+    },
+    {
+        key: "countdown",
+        label: "Countdown",
+        description: "Timer to date/time.",
+        defaults: {
+            enabled: true,
+            title: "باقي على المناسبة",
+            targetField: "eventDate",
+            showDays: true,
+            showHours: true,
+            showMinutes: true
+        }
+    },
+    {
+        key: "gallery",
+        label: "Gallery",
+        description: "Extra image collection.",
+        defaults: {
+            enabled: true,
+            title: "معرض الصور",
+            maxItems: 12
+        }
+    },
+    {
+        key: "map",
+        label: "Map",
+        description: "Location/map interaction.",
+        defaults: {
+            enabled: true,
+            title: "الموقع",
+            sourceField: "location"
+        }
+    },
+    {
+        key: "sharing",
+        label: "Sharing",
+        description: "Social sharing buttons.",
+        defaults: {
+            enabled: true,
+            title: "شارك الدعوة",
+            channels: ["whatsapp", "x", "copyLink"]
+        }
+    },
+    {
+        key: "guestNames",
+        label: "Guest names",
+        description: "Personalized invitee names.",
+        defaults: {
+            enabled: true,
+            title: "المدعوون",
+            maxItems: 20
+        }
+    }
 ];
 
 const OPTION_TYPES = new Set(["select", "radio", "font", "icon"]);
@@ -503,7 +593,7 @@ function renderFeatureToggles() {
     const target = $("[data-feature-toggles]");
     if (!target) return;
 
-    target.innerHTML = FEATURE_BLUEPRINTS.map(([key, label, description]) => `
+    target.innerHTML = FEATURE_BLUEPRINTS.map(({ key, label, description }) => `
         <label class="feature-toggle">
             <input type="checkbox" data-feature-key="${key}">
             <span>
@@ -856,10 +946,14 @@ function selectedFeatures() {
 
     $$("[data-feature-key]").forEach((input) => {
         const key = input.dataset.featureKey;
+        const blueprint = FEATURE_BLUEPRINTS.find((item) => item.key === key);
+        const defaults = clone(blueprint?.defaults || { enabled: true });
+        const existing = typeof features[key] === "object" && features[key] !== null ? features[key] : {};
 
         if (input.checked) {
             features[key] = {
-                ...(typeof features[key] === "object" && features[key] !== null ? features[key] : {}),
+                ...defaults,
+                ...existing,
                 enabled: true
             };
         } else if (features[key]?.enabled === true) {
@@ -1261,12 +1355,27 @@ function demoTemplate() {
             }
         ],
         features: {
+            feelings: {
+                enabled: true,
+                approvalMode: "manual",
+                preventDuplicate: true,
+                rateLimitMinutes: 5,
+                title: "شارك مشاعرك",
+                description: "اكتب رسالة جميلة لأصحاب الدعوة"
+            },
             rsvp: {
                 enabled: true,
-                preventDuplicate: true
+                preventDuplicate: true,
+                title: "هل ستحضر؟",
+                description: "يسعدنا معرفة حضورك للمناسبة"
             },
             countdown: {
-                enabled: true
+                enabled: true,
+                title: "باقي على المناسبة",
+                targetField: "eventDate",
+                showDays: true,
+                showHours: true,
+                showMinutes: true
             }
         }
     }, null, 2);
